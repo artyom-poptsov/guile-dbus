@@ -24,10 +24,13 @@ libguile_dbus_la_SOURCES = \
 	common.c		\
 	dbus-connection-type.c	\
 	dbus-connection-type.h	\
-	dbus-connection-main.c
+	dbus-connection-main.c	\
+	dbus-message-type.h	\
+	dbus-message-type.c
 
 BUILT_SOURCES = \
-	dbus-connection-type.x
+	dbus-connection-type.x \
+	dbus-message-type.x
 
 libguile_dbus_la_CPPFLAGS = $(CFLAGS) $(GUILE_CFLAGS) $(DBUS_CFLAGS)
 
