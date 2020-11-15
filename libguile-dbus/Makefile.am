@@ -23,7 +23,8 @@ libguile_dbus_la_SOURCES = \
 	common.h		\
 	common.c		\
 	dbus-connection-type.c	\
-	dbus-connection-type.h
+	dbus-connection-type.h	\
+	dbus-connection-main.c
 
 BUILT_SOURCES = \
 	dbus-connection-type.x
