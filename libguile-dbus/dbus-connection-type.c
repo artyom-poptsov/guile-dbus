@@ -69,16 +69,9 @@ SCM _scm_from_dbus_connection(DBusConnection* conn, DBusBusType type)
 {
     SCM smob;
     struct dbus_connection_data* gdbus_conn = _allocate_dbus_connection_data();
-    DBusError error;
-    dbus_error_init(&error);
+
     gdbus_conn->type = type;
-    gdbus_conn->conn = dbus_bus_get(type, &error);
-    if (dbus_error_is_set(&error)) {
-        /* TODO: handle errors */
-        fprintf(stderr, "Connection error: %s\n", error.message);
-        dbus_error_free(&error);
-        return SCM_BOOL_F;
-    }
+    gdbus_conn->conn = conn;
 
     SCM_NEWSMOB(smob, dbus_connection_tag, gdbus_conn);
 
@@ -89,6 +82,25 @@ struct dbus_connection_data* _scm_to_dbus_connection_data(SCM x)
 {
     scm_assert_smob_type(dbus_connection_tag, x);
     return (struct dbus_connection_data *) SCM_SMOB_DATA(x);
+}
+
+
+SCM_DEFINE(gdbus_make_dbus_connection,
+           "%make-dbus-connection", 1, 0, 0,
+           (SCM type),
+           "Make a DBus connection.")
+{
+    const struct symbol_mapping* c_type = map_scm_to_const(bus_types, type);
+    DBusError error;
+    dbus_error_init(&error);
+    DBusConnection* conn = dbus_bus_get(c_type->value, &error);
+    if (dbus_error_is_set(&error)) {
+        /* TODO: handle errors */
+        fprintf(stderr, "Connection error: %s\n", error.message);
+        dbus_error_free(&error);
+        return SCM_BOOL_F;
+    }
+    return _scm_from_dbus_connection(conn, c_type->value);
 }
 
 
