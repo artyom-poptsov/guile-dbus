@@ -30,7 +30,7 @@ BUILT_SOURCES = \
 
 libguile_dbus_la_CPPFLAGS = $(CFLAGS) $(GUILE_CFLAGS) $(DBUS_CFLAGS)
 
-DBUS_LD_FLAGS = -ldbus
+DBUS_LD_FLAGS = -ldbus-1
 
 libguile_dbus_la_LDFLAGS = -module -no-undefined $(DBUS_LD_FLAGS)  \
 	-version-info $(LIBGUILE_DBUS_INTERFACE) $(GUILE_LDFLAGS)
