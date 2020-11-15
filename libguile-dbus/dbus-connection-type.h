@@ -22,7 +22,7 @@ struct dbus_connection_data {
 void init_dbus_connection_type();
 
 
-struct dbus_connection _scm_to_dbus_connection_data(SCM x);
+struct dbus_connection_data* _scm_to_dbus_connection_data(SCM x);
 SCM _scm_from_dbus_connection(DBusConnection* conn);
 SCM dbus_bus_type_to_scm(DBusBusType type);
 

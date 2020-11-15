@@ -84,7 +84,7 @@ SCM _scm_from_dbus_connection(DBusConnection* conn, DBusBusType type)
     return smob;
 }
 
-struct dbus_connection* _scm_to_dbus_connection_data(SCM x)
+struct dbus_connection_data* _scm_to_dbus_connection_data(SCM x)
 {
     scm_assert_smob_type(dbus_connection_tag, x);
     return (struct dbus_connection_data *) SCM_SMOB_DATA(x);
