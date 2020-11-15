@@ -1,4 +1,4 @@
 # -*- mode: org; -*-
 
 * Guile-DBus
-Guile-Udev is a [[https://www.gnu.org/software/guile/][GNU Guile]] bindings to [[https://www.freedesktop.org/wiki/Software/dbus/][DBus]].
+Guile-DBus is a [[https://www.gnu.org/software/guile/][GNU Guile]] bindings to [[https://www.freedesktop.org/wiki/Software/dbus/][DBus]].
