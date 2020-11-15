@@ -1,6 +1,7 @@
 #include <libguile.h>
 #include <dbus/dbus.h>
 
+#include "common.h"
 #include "dbus-connection-type.h"
 
 static const char* GDBUS_CONNECTION_TYPE_NAME = "dbus-connection";
