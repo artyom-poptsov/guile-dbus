@@ -102,7 +102,7 @@ AC_SUBST(LIBGUILE_UDEV_INTERFACE)
 GUILE_EFFECTIVE_VERSION=`$GUILE -c '(display (effective-version))'`
 AC_SUBST(GUILE_EFFECTIVE_VERSION)
 
-AC_CONFIG_FILES([Makefile libguile-udev/Makefile build-aux/Makefile])
+AC_CONFIG_FILES([Makefile libguile-dbus/Makefile build-aux/Makefile])
 AC_CONFIG_FILES([m4/Makefile am/Makefile doc/Makefile])
 AC_CONFIG_FILES([modules/Makefile modules/dbus/Makefile])
 
