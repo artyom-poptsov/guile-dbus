@@ -28,7 +28,7 @@ libguile_dbus_la_SOURCES = \
 BUILT_SOURCES = \
 	dbus-connection-type.x
 
-libguile_dbus_la_CPPFLAGS = $(CFLAGS) $(GUILE_CFLAGS)
+libguile_dbus_la_CPPFLAGS = $(CFLAGS) $(GUILE_CFLAGS) $(DBUS_CFLAGS)
 
 DBUS_LD_FLAGS = -ldbus
 
@@ -39,7 +39,7 @@ AM_CFLAGS = $(WARN_CFLAGS)
 AM_CPPFLAGS = -I$(top_srcdir)/libguile-dbus -I$(top_builddir)/libguile-dbus
 
 snarfcppopts = $(INCLUDES) $(CPPFLAGS) $(CFLAGS) $(GUILE_CFLAGS) \
-	$(AM_CPPFLAGS)
+	$(AM_CPPFLAGS) $(DBUS_CFLAGS)
 
 SUFFIXES = .x
 .c.x:
