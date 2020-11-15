@@ -19,7 +19,7 @@ include $(top_srcdir)/am/snarf
 
 lib_LTLIBRARIES = libguile-dbus.la
 
-libguile_udev_la_SOURCES = \
+libguile_dbus_la_SOURCES = \
 	common.h		\
 	common.c		\
 	dbus-connection-type.c	\

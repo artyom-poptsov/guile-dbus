@@ -2,7 +2,7 @@ dnl   configuration script for Guile-DBus
 dnl   Process this file with autoconf to produce configure.
 dnl
 
-define(GUILE_UDEV_CONFIGURE_COPYRIGHT, [[
+define(GUILE_DBUS_CONFIGURE_COPYRIGHT, [[
 Copyright (C) 2020 Artyom V. Poptsov <poptsov.artyom@gmail.com>
 
 This file is part of Guile-DBus.
@@ -25,7 +25,7 @@ AC_INIT([Guile-DBus], [0.1.0], [poptsov.artyom@gmail.com],
                      [guile-dbus],
                      [https://github.com/artyom-poptsov/guile-dbus])
 
-AC_COPYRIGHT(GUILE_UDEV_CONFIGURE_COPYRIGHT)
+AC_COPYRIGHT(GUILE_DBUS_CONFIGURE_COPYRIGHT)
 
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([m4])
@@ -57,9 +57,9 @@ AC_ARG_WITH([guilesitedir],
 # Check for needed libraries
 # -------------------------------------------------------------------------------
 
-PKG_CHECK_MODULES([UDEV], [udev >= 239])
+PKG_CHECK_MODULES([DBUS], [libdbus-1-3 >= 1.12])
 
-AM_CONDITIONAL(HAVE_UDEV, $HAVE_UDEV)
+AM_CONDITIONAL(HAVE_DBUS, $HAVE_DBUS)
 
 dnl These macros must be provided by guile.m4.
 m4_pattern_forbid([^GUILE_PKG$])
@@ -96,8 +96,8 @@ if test "x$guilesitedir" = "x"; then
 fi
 AC_SUBST([guilesitedir])
 
-LIBGUILE_UDEV_INTERFACE="1:0:0"
-AC_SUBST(LIBGUILE_UDEV_INTERFACE)
+LIBGUILE_DBUS_INTERFACE="1:0:0"
+AC_SUBST(LIBGUILE_DBUS_INTERFACE)
 
 GUILE_EFFECTIVE_VERSION=`$GUILE -c '(display (effective-version))'`
 AC_SUBST(GUILE_EFFECTIVE_VERSION)
