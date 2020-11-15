@@ -57,7 +57,7 @@ AC_ARG_WITH([guilesitedir],
 # Check for needed libraries
 # -------------------------------------------------------------------------------
 
-PKG_CHECK_MODULES([DBUS], [libdbus-1-3 >= 1.12])
+PKG_CHECK_MODULES([DBUS], [dbus-1 >= 1.12])
 
 AM_CONDITIONAL(HAVE_DBUS, $HAVE_DBUS)
 
