@@ -100,5 +100,5 @@ void init_dbus_connection_type()
     scm_set_smob_print(dbus_connection_tag, print_dbus_connection);
     scm_set_smob_equalp(dbus_connection_tag, equalp_dbus_connection);
 
-#include "udev-device-type.x"
+#include "dbus-connection-type.x"
 }
