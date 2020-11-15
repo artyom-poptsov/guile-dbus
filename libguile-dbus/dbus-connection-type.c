@@ -1,5 +1,6 @@
 #include <libguile.h>
 #include <dbus/dbus.h>
+#include <stdio.h>
 
 #include "common.h"
 #include "dbus-connection-type.h"
