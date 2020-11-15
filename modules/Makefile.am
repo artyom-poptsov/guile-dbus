@@ -15,10 +15,10 @@
 ## You should have received a copy of the GNU General Public License
 ## along with Guile-Udev.  If not, see <http://www.gnu.org/licenses/>.
 
-SUBDIRS = udev
+SUBDIRS = dbus
 
 clean-go:
-	@cd udev; make clean-go
+	@cd dbus; make clean-go
 .PHONY: clean-go
 
 ## Makefile.am ends here.
