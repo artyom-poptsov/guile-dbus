@@ -47,7 +47,7 @@ static int print_dbus_connection(SCM obj, SCM port, scm_print_state* pstate)
 {
     (void) pstate;
     struct dbus_connection_data* gdbus_conn = _scm_to_dbus_connection_data(obj);
-    scm_puts("#<udev-connection ", port);
+    scm_puts("#<dbus-connection ", port);
     scm_display(dbus_bus_type_to_scm(gdbus_conn->type), port);
     scm_puts(">", port);
     return 1;
