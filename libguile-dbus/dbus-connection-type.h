@@ -2,7 +2,7 @@
 #define __DBUS_CONNECTION_TYPE__
 
 #include <libguile.h>
-#include <dbus.h>
+#include <dbus/dbus.h>
 
 /**
  * Guile-DBus connection SMOB data.

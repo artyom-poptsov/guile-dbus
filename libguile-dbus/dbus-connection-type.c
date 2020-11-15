@@ -1,5 +1,5 @@
 #include <libguile.h>
-#include <dbus.h>
+#include <dbus/dbus.h>
 
 #include "dbus-connection-type.h"
 
