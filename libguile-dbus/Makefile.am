@@ -22,6 +22,8 @@ lib_LTLIBRARIES = libguile-dbus.la
 libguile_dbus_la_SOURCES = \
 	common.h		\
 	common.c		\
+	error.h			\
+	error.c			\
 	dbus-connection-type.c	\
 	dbus-connection-type.h	\
 	dbus-connection-main.c	\
