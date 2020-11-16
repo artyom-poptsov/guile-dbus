@@ -1,6 +1,7 @@
 #include <dbus/dbus.h>
 #include <libguile.h>
 
+#include "error.h"
 #include "dbus-message-type.h"
 
 SCM_DEFINE(gdbus_message_new_method_call,
@@ -34,7 +35,8 @@ SCM_DEFINE(gdbus_message_new_method_call,
                                            c_iface,
                                            c_method);
     if (message == NULL) {
-        /* TODO: Add error checking */
+        gdbus_error(FUNC_NAME, "Could not create a message",
+                    scm_list_4(destination, path, iface, method));
     }
 
     scm_dynwind_end();
