@@ -32,8 +32,9 @@ libguile_dbus_la_SOURCES = \
 	dbus-message-func.c
 
 BUILT_SOURCES = \
-	dbus-connection-type.x \
-	dbus-message-type.x
+	dbus-connection-type.x 	\
+	dbus-message-type.x	\
+	dbus-message-func.x
 
 libguile_dbus_la_CPPFLAGS = $(CFLAGS) $(GUILE_CFLAGS) $(DBUS_CFLAGS)
 
