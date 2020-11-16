@@ -3,7 +3,7 @@
 
 #include <libguile.h>
 
-#define GUILE_UDEV_ERROR "guile-dbus-error"
+#define GUILE_DBUS_ERROR "guile-dbus-error"
 
 void gdbus_error(const char* proc, const char* msg, SCM args);
 
