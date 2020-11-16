@@ -45,7 +45,7 @@ SCM_DEFINE(gdbus_message_new_method_call,
 }
 #undef FUNC_NAME
 
-SCM_DEFINE(gdbus_make_dbus_message_error,
+SCM_DEFINE(gdbus_message_new_error,
            "%make-dbus-message/error", 3, 0, 0,
            (SCM message, SCM error_name, SCM error_message),
            "Make a new message that is a reply to another message.")
