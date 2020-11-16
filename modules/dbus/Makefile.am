@@ -18,7 +18,8 @@
 include $(top_srcdir)/am/guilec
 
 SCM_SOURCES = \
-	connection.scm
+	connection.scm \
+	message.scm
 
 pkgguilesitedir = $(guilesitedir)/dbus
 
