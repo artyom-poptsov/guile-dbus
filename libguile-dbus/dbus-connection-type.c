@@ -3,6 +3,7 @@
 #include <stdio.h>
 
 #include "common.h"
+#include "error.h"
 #include "dbus-connection-type.h"
 
 static const char* GDBUS_CONNECTION_TYPE_NAME = "dbus-connection";
@@ -89,19 +90,20 @@ SCM_DEFINE(gdbus_make_dbus_connection,
            "%make-dbus-connection", 1, 0, 0,
            (SCM type),
            "Make a DBus connection.")
+#define FUNC_NAME s_gdbus_make_dbus_connection
 {
     const struct symbol_mapping* c_type = map_scm_to_const(bus_types, type);
     DBusError error;
     dbus_error_init(&error);
     DBusConnection* conn = dbus_bus_get(c_type->value, &error);
     if (dbus_error_is_set(&error)) {
-        /* TODO: handle errors */
-        fprintf(stderr, "Connection error: %s\n", error.message);
         dbus_error_free(&error);
-        return SCM_BOOL_F;
+        gdbus_error(FUNC_NAME, "Connection error",
+                    scm_from_locale_string(error.message));
     }
     return _scm_from_dbus_connection(conn, c_type->value);
 }
+#undef FUNC_NAME
 
 
 void init_dbus_connection_type()
