@@ -49,7 +49,7 @@ SCM_DEFINE(gdbus_message_new_error,
            "%make-dbus-message/error", 3, 0, 0,
            (SCM message, SCM error_name, SCM error_message),
            "Make a new message that is a reply to another message.")
-#define FUNC_NAME s_gdbus_make_dbus_message_error
+#define FUNC_NAME s_gdbus_message_new_error
 {
     struct dbus_message_data* data = _scm_to_dbus_message_data(message);
     char* c_error_name = NULL;
