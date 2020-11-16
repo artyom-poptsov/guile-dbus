@@ -2,7 +2,8 @@
   #:export (dbus-message
             dbus-message?
             make-dbus-message
-            make-dbus-message/method-call))
+            make-dbus-message/method-call
+            make-dbus-message/error))
 
 
 (define (make-dbus-message type)
@@ -14,6 +15,12 @@
                                         iface
                                         method)
   (%dbus-message-new-method-call destination path iface method))
+
+(define* (make-dbus-message/error #:key
+                                  message
+                                  error-name
+                                  error-message)
+  (%make-dbus-message/error message error-name error-message))
 
 
 (load-extension "libguile-dbus" "init_dbus_message")
