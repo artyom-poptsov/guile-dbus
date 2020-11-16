@@ -26,7 +26,8 @@ libguile_dbus_la_SOURCES = \
 	dbus-connection-type.h	\
 	dbus-connection-main.c	\
 	dbus-message-type.h	\
-	dbus-message-type.c
+	dbus-message-type.c	\
+	dbus-message-func.c
 
 BUILT_SOURCES = \
 	dbus-connection-type.x \
