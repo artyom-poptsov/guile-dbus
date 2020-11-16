@@ -1,13 +1,14 @@
 #include <dbus/dbus.h>
 #include <libguile.h>
 
+#include "common.h"
 #include "error.h"
 #include "dbus-message-type.h"
 
-SCM_DEFINE(gdbus_message_new_method_call,
-           "%make-dbus-message/method-call", 4, 0, 0,
-           (SCM destination, SCM path, SCM iface, SCM method),
-           "Make a new message to invoke a method on a remote object.")
+
+GDBUS_DEFINE(gdbus_message_new_method_call, "%make-dbus-message/method-call", 4,
+             (SCM destination, SCM path, SCM iface, SCM method),
+             "Make a new message to invoke a method on a remote object.")
 #define FUNC_NAME s_gdbus_message_new_method_call
 {
     char* c_destination;
@@ -45,10 +46,11 @@ SCM_DEFINE(gdbus_message_new_method_call,
 }
 #undef FUNC_NAME
 
-SCM_DEFINE(gdbus_message_new_error,
-           "%make-dbus-message/error", 3, 0, 0,
-           (SCM message, SCM error_name, SCM error_message),
-           "Make a new message that is a reply to another message.")
+
+
+GDBUS_DEFINE(gdbus_message_new_error, "%make-dbus-message/error", 3,
+             (SCM message, SCM error_name, SCM error_message),
+             "Make a new message that is a reply to another message.")
 #define FUNC_NAME s_gdbus_message_new_error
 {
     struct dbus_message_data* data = _scm_to_dbus_message_data(message);

@@ -77,9 +77,8 @@ struct dbus_message_data* _scm_to_dbus_message_data(SCM x)
 }
 
 
-SCM_DEFINE(gdbus_make_dbus_message,
-           "%make-dbus-message", 1, 0, 0,
-           (SCM type),
+
+GDBUS_DEFINE(gdbus_make_dbus_message, "%make-dbus-message", 1, (SCM type),
            "Make a DBus message")
 #define FUNC_NAME s_gdbus_make_dbus_message
 {

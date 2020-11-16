@@ -3,6 +3,10 @@
 
 #include <libguile.h>
 
+/* This macro is a little bit shorter than the original SCM_DEFINE macro. */
+#define GDBUS_DEFINE(c_name, scheme_name, req, arglist, docstring)      \
+    SCM_DEFINE(c_name, scheme_name, req, 0, 0, arglist, docstring)
+
 
 /* Structures.  */
 

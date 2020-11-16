@@ -86,10 +86,8 @@ struct dbus_connection_data* _scm_to_dbus_connection_data(SCM x)
 }
 
 
-SCM_DEFINE(gdbus_make_dbus_connection,
-           "%make-dbus-connection", 1, 0, 0,
-           (SCM type),
-           "Make a DBus connection.")
+GDBUS_DEFINE(gdbus_make_dbus_connection, "%make-dbus-connection", 1, (SCM type),
+             "Make a DBus connection.")
 #define FUNC_NAME s_gdbus_make_dbus_connection
 {
     const struct symbol_mapping* c_type = map_scm_to_const(bus_types, type);
