@@ -5,7 +5,7 @@
             make-dbus-message/method-call))
 
 
-(define* (make-dbus-message #:key (type 'invalid))
+(define (make-dbus-message type)
   (%make-dbus-message type))
 
 (define* (make-dbus-message/method-call #:key
