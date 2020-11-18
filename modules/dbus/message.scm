@@ -21,10 +21,10 @@
 (define (make-dbus-message/method-return message)
   (%make-dbus-message/method-return message))
 
-(define (make-dbus-message/signal #:key
-                                  path
-                                  iface
-                                  name)
+(define* (make-dbus-message/signal #:key
+                                   path
+                                   iface
+                                   name)
   (%make-dbus-message/signal path iface name))
 
 (define* (make-dbus-message/error #:key
