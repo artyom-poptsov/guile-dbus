@@ -225,3 +225,9 @@ GDBUS_DEFINE(gdbus_message_append, "%dbus-message-append", 3,
     return SCM_UNDEFINED;
 }
 #undef FUNC_NAME
+
+
+void init_dbus_message_func()
+{
+#include "dbus-message-func.x"
+}
