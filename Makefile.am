@@ -19,7 +19,7 @@
 
 ACLOCAL_AMFLAGS = -I m4 --install
 
-SUBDIRS = am libguile-dbus build-aux m4 modules
+SUBDIRS = am libguile-dbus build-aux m4 modules tests
 
 EXTRA_DIST =					\
 	build-aux/config.rpath			\

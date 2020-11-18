@@ -105,6 +105,7 @@ AC_SUBST(GUILE_EFFECTIVE_VERSION)
 AC_CONFIG_FILES([Makefile libguile-dbus/Makefile build-aux/Makefile])
 AC_CONFIG_FILES([m4/Makefile am/Makefile doc/Makefile])
 AC_CONFIG_FILES([modules/Makefile modules/dbus/Makefile])
+AC_CONFIG_FILES([tests/Makefile])
 
 AM_CONDITIONAL([CROSS_COMPILING], [test "x$cross_compiling" = "xyes"])
 
