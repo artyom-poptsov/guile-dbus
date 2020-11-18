@@ -126,3 +126,102 @@ GDBUS_DEFINE(gdbus_messsage_new_signal, "%make-dbus-message/signal", 3,
     return _scm_from_dbus_message(new_message);
 }
 #undef FUNC_NAME
+
+
+/**
+ * See 'dbus-protocol.h'.
+ */
+static const struct symbol_mapping message_value_types[] = {
+    /* Type code that is never equal to a legitimate type code. */
+    { "invalid",     DBUS_TYPE_INVALID     },
+    /* Primitive data types. */
+    { "byte",        DBUS_TYPE_BYTE        },
+    { "boolean",     DBUS_TYPE_BOOLEAN     },
+    { "int16",       DBUS_TYPE_INT16       },
+    { "int32",       DBUS_TYPE_INT32       },
+    { "uint16",      DBUS_TYPE_UINT16      },
+    { "uint32",      DBUS_TYPE_UINT32      },
+    { "int64",       DBUS_TYPE_INT64       },
+    { "uint64",      DBUS_TYPE_UINT64      },
+    { "double",      DBUS_TYPE_DOUBLE      },
+    { "string",      DBUS_TYPE_STRING      },
+    { "object-path", DBUS_TYPE_OBJECT_PATH },
+    { "signature",   DBUS_TYPE_SIGNATURE   },
+    { "unix-fd",     DBUS_TYPE_UNIX_FD     },
+    /* Compound data types. */
+    { "array",       DBUS_TYPE_ARRAY       },
+    { "variant",     DBUS_TYPE_VARIANT     },
+    { "struct",      DBUS_TYPE_STRUCT      },
+    { "dict-entry",  DBUS_TYPE_DICT_ENTRY  },
+    { NULL,          -1                    }
+};
+
+GDBUS_DEFINE(gdbus_message_append, "%dbus-message-append", 3,
+             (SCM message, SCM args),
+             "Append arguments ARGS to the MESSAGE.")
+#define FUNC_NAME s_gdbus_message_append
+{
+    struct dbus_message_data* data = _scm_to_dbus_message_data(message);
+    DBusMessageIter iter;
+    int list_size;
+    SCM param;
+    int idx;
+
+    SCM_ASSERT(scm_to_bool(scm_list_p(args)), args, SCM_ARG2, FUNC_NAME);
+
+    dbus_message_iter_init_append(data->message, &iter);
+
+    list_size = scm_to_int32(scm_length(args));
+    for (idx = 0; idx < list_size; ++idx) {
+        param = scm_list_ref(args, scm_from_int(idx));
+        if (scm_list_p(param)) {
+            SCM scm_type  = scm_list_ref(param, scm_from_int(0));
+            SCM scm_value = scm_list_ref(param, scm_from_int(1));
+            const struct symbol_mapping* symbol
+                = map_scm_to_const(message_value_types, scm_type);
+            switch (symbol->value) {
+            case DBUS_TYPE_BYTE: {
+                unsigned char value = scm_to_uchar(scm_value);
+                dbus_message_iter_append_basic(&iter, symbol->value, &value);
+                break;
+            }
+            case DBUS_TYPE_INT16: {
+                dbus_int16_t value = scm_to_short(scm_value);
+                dbus_message_iter_append_basic(&iter, symbol->value, &value);
+                break;
+            }
+            case DBUS_TYPE_INT32: {
+                dbus_int32_t value = scm_to_int32(scm_value);
+                dbus_message_iter_append_basic(&iter, symbol->value, &value);
+                break;
+            }
+            case DBUS_TYPE_UINT16: {
+                dbus_uint16_t value = scm_to_uint16(scm_value);
+                dbus_message_iter_append_basic(&iter, symbol->value, &value);
+                break;
+            }
+            case DBUS_TYPE_UINT32: {
+                dbus_uint32_t value = scm_to_uint32(scm_value);
+                dbus_message_iter_append_basic(&iter, symbol->value, &value);
+                break;
+            }
+            case DBUS_TYPE_INT64: {
+                dbus_int64_t value = scm_to_int64(scm_value);
+                dbus_message_iter_append_basic(&iter, symbol->value, &value);
+            }
+            case DBUS_TYPE_UINT64:
+            case DBUS_TYPE_DOUBLE:
+            case DBUS_TYPE_STRING:
+                gdbus_error(FUNC_NAME, "Unsupported yet",
+                            scm_list_2(message, args));
+            }
+        }
+    }
+
+    /* if (! dbus_message_iter_append_basic(&iter, DBUS_TYPE_STRING, &param)) { */
+    /*     gdbus_error(FUNC_NAME, "Out of memory", scm_list_3(message, args)); */
+    /* } */
+
+    return SCM_UNDEFINED;
+}
+#undef FUNC_NAME

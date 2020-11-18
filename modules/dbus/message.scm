@@ -33,7 +33,8 @@
                                   error-message)
   (%make-dbus-message/error message error-name error-message))
 
-
+(define (dbus-message-append message args)
+  (%dbus-message-append messsage args))
 
 
 (load-extension "libguile-dbus" "init_dbus_message")
