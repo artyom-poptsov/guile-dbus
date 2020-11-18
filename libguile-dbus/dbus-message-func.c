@@ -236,6 +236,16 @@ GDBUS_DEFINE(gdbus_message_append, "%dbus-message-append", 3,
 }
 #undef FUNC_NAME
 
+GDBUS_DEFINE(gdbus_message_get_interface, "%dbus-message-get-interface", 1,
+             (SCM message),
+             "\
+Gets the interface this message is being sent to or emitted from.")
+{
+    struct dbus_message_data* data = _scm_to_dbus_message_data(message);
+    const char* interface = dbus_message_get_interface(data->message);
+    return scm_from_locale_string(interface);
+}
+
 
 void init_dbus_message_func()
 {
