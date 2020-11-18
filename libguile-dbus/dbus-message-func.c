@@ -5,6 +5,16 @@
 #include "error.h"
 #include "dbus-message-type.h"
 
+GDBUS_DEFINE(gdbus_make_dbus_message, "%make-dbus-message", 1, (SCM type),
+             "Make a DBus message")
+#define FUNC_NAME s_gdbus_make_dbus_message
+{
+    const struct symbol_mapping* c_type = map_scm_to_const(message_types, type);
+    DBusMessage* message = dbus_message_new(c_type->value);
+    return _scm_from_dbus_message(message);
+}
+#undef FUNC_NAME
+
 
 GDBUS_DEFINE(gdbus_message_new_method_call, "%make-dbus-message/method-call", 4,
              (SCM destination, SCM path, SCM iface, SCM method),

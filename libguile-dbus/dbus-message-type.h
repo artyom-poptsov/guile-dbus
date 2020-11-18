@@ -4,6 +4,11 @@
 #include <libguile.h>
 #include <dbus/dbus.h>
 
+#include "common.h"
+
+
+extern const struct symbol_mapping message_types[];
+
 /**
  * Guile-DBus message SMOB data.
  */

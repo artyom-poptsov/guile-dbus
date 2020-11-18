@@ -11,7 +11,7 @@ scm_t_bits dbus_message_tag;
 /**
  * See 'dbus-protocol.h'.
  */
-static const struct symbol_mapping message_types[] = {
+const struct symbol_mapping message_types[] = {
     { "invalid",       DBUS_MESSAGE_TYPE_INVALID       },
     { "method-call",   DBUS_MESSAGE_TYPE_METHOD_CALL   },
     { "method-return", DBUS_MESSAGE_TYPE_METHOD_RETURN },
@@ -75,18 +75,6 @@ struct dbus_message_data* _scm_to_dbus_message_data(SCM x)
     scm_assert_smob_type(dbus_message_tag, x);
     return (struct dbus_message_data *) SCM_SMOB_DATA(x);
 }
-
-
-
-GDBUS_DEFINE(gdbus_make_dbus_message, "%make-dbus-message", 1, (SCM type),
-           "Make a DBus message")
-#define FUNC_NAME s_gdbus_make_dbus_message
-{
-    const struct symbol_mapping* c_type = map_scm_to_const(message_types, type);
-    DBusMessage* message = dbus_message_new(c_type->value);
-    return _scm_from_dbus_message(message);
-}
-#undef FUNC_NAME
 
 
 void init_dbus_message_type()
