@@ -15,6 +15,19 @@ GDBUS_DEFINE(gdbus_make_dbus_message, "%make-dbus-message", 1, (SCM type),
 }
 #undef FUNC_NAME
 
+GDBUS_DEFINE(gdbus_is_message_p, "dbus-message?", 1, (SCM x),
+            "\
+Return #t if X is a DBus message, #f otherwise.\
+")
+{
+/* #if USING_GUILE_BEFORE_2_2 */
+    return scm_from_bool (SCM_SMOB_PREDICATE (dbus_message_tag, x));
+/* #else */
+/*     return scm_from_bool (SCM_PORTP(x) */
+/*                           && (SCM_PORT_TYPE(x) == dbus_message_tag)); */
+/* #endif */
+}
+
 
 GDBUS_DEFINE(gdbus_message_new_method_call, "%make-dbus-message/method-call", 4,
              (SCM destination, SCM path, SCM iface, SCM method),

@@ -6,6 +6,8 @@
 
 #include "common.h"
 
+extern scm_t_bits dbus_message_tag;
+
 
 extern const struct symbol_mapping message_types[];
 
