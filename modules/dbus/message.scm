@@ -6,6 +6,7 @@
             make-dbus-message/method-return
             make-dbus-message/signal
             make-dbus-message/error
+            dbus-message-set-interface
             dbus-message-get-interface))
 
 
@@ -35,6 +36,9 @@
   (%make-dbus-message/error message error-name error-message))
 
 
+
+(define (dbus-message-set-interface message iface)
+  (%dbus-message-set-interface message iface))
 
 (define (dbus-message-get-interface message)
   (%dbus-message-get-interface message))

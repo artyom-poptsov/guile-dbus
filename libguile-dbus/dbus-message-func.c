@@ -236,6 +236,35 @@ GDBUS_DEFINE(gdbus_message_append, "%dbus-message-append", 3,
 }
 #undef FUNC_NAME
 
+GDBUS_DEFINE(gdbus_message_set_interface, "%dbus-message-set-interface", 2,
+             (SCM message, SCM iface),
+    "\
+Sets the interface this message is being sent to (for \
+DBUS_MESSAGE_TYPE_METHOD_CALL) or the interface a signal is being emitted from \
+(for DBUS_MESSAGE_TYPE_SIGNAL). \
+")
+#define FUNC_NAME s_gdbus_message_set_interface
+{
+    struct dbus_message_data* data = _scm_to_dbus_message_data(message);
+    char* c_iface = NULL;
+
+    SCM_ASSERT(scm_is_string(iface) || scm_is_false(iface), iface, SCM_ARG2, FUNC_NAME);
+
+    scm_dynwind_begin(0);
+    if (scm_is_string(iface)) {
+        c_iface = scm_to_locale_string(iface);
+        scm_dynwind_free(c_iface);
+    }
+
+    if (! dbus_message_set_interface(data->message, c_iface)) {
+        gdbus_error(FUNC_NAME, "Out of memory", scm_list_2(message, iface));
+    }
+
+    scm_dynwind_end();
+    return SCM_UNDEFINED;
+}
+#undef FUNC_NAME
+
 GDBUS_DEFINE(gdbus_message_get_interface, "%dbus-message-get-interface", 1,
              (SCM message),
              "\
