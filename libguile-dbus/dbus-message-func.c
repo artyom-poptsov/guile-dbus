@@ -288,6 +288,32 @@ Gets the interface this message is being sent to or emitted from.")
     return scm_from_locale_string(interface);
 }
 
+GDBUS_DEFINE(gdbus_message_has_interface_p, "dbus-message-has-interface?", 2,
+             (SCM message, SCM interface),
+   "\
+Checks if the message has an INTERFACE. \
+")
+#define FUNC_NAME s_gdbus_message_has_interface_p
+{
+    struct dbus_message_data* data = _scm_to_dbus_message_data(message);
+    dbus_bool_t result;
+    char* c_interface;
+
+    SCM_ASSERT(scm_is_string(interface), interface, SCM_ARG2, FUNC_NAME);
+
+    scm_dynwind_begin(0);
+
+    c_interface = scm_to_locale_string(interface);
+    scm_dynwind_free(c_interface);
+
+    result = dbus_message_has_interface(data->message, c_interface);
+
+    scm_dynwind_end();
+
+    return scm_from_bool(result);
+}
+#undef FUNC_NAME
+
 
 void init_dbus_message_func()
 {

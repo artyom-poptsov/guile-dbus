@@ -15,4 +15,10 @@
     (string=? (dbus-message-get-interface message)
               "org.freedesktop.DBus.Introspectable")))
 
+(test-assert "dbus-message-has-interface"
+  (let ((message (make-dbus-message 'method-call)))
+    (dbus-message-set-interface message "org.freedesktop.DBus.Introspectable")
+    (dbus-message-has-interface? message
+                                 "org.freedesktop.DBus.Introspectable")))
+
 (test-end "message")

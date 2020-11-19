@@ -7,7 +7,8 @@
             make-dbus-message/signal
             make-dbus-message/error
             dbus-message-set-interface
-            dbus-message-get-interface))
+            dbus-message-get-interface
+            dbus-message-has-interface?))
 
 
 (define (make-dbus-message type)
