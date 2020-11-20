@@ -25,6 +25,6 @@
   (let ((message (make-dbus-message 'method-call)))
     (dbus-message-append-args message '((byte 42)))
     (let ((args (dbus-message-get-args message '(byte))))
-      (equals? 42 (cadar args)))))
+      (equal? 42 (cadar args)))))
 
 (test-end "message")
