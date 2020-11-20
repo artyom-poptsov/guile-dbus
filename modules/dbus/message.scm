@@ -6,6 +6,7 @@
             make-dbus-message/method-return
             make-dbus-message/signal
             make-dbus-message/error
+            dbus-message-append-args
             dbus-message-get-args
             dbus-message-set-interface
             dbus-message-get-interface
