@@ -46,7 +46,7 @@
 
 
 
-(define (dbus-message-append message args)
+(define (dbus-message-append-args message args)
   (%dbus-message-append messsage args))
 
 

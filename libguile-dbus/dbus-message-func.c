@@ -179,7 +179,7 @@ static const struct symbol_mapping message_value_types[] = {
     { NULL,          -1                    }
 };
 
-GDBUS_DEFINE(gdbus_message_append, "%dbus-message-append", 3,
+GDBUS_DEFINE(gdbus_message_append_args, "%dbus-message-append-args", 3,
              (SCM message, SCM args),
              "Append arguments ARGS to the MESSAGE.")
 #define FUNC_NAME s_gdbus_message_append
