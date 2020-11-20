@@ -24,6 +24,8 @@ libguile_dbus_la_SOURCES = \
 	common.c		\
 	error.h			\
 	error.c			\
+	dbus-type.h		\
+	dbus-type.c		\
 	dbus-connection-type.c	\
 	dbus-connection-type.h	\
 	dbus-connection-main.c	\

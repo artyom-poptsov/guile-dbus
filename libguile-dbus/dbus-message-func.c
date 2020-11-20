@@ -2,6 +2,7 @@
 #include <libguile.h>
 
 #include "common.h"
+#include "dbus-type.h"
 #include "error.h"
 #include "dbus-message-type.h"
 
@@ -150,35 +151,6 @@ GDBUS_DEFINE(gdbus_messsage_new_signal, "%make-dbus-message/signal", 3,
 }
 #undef FUNC_NAME
 
-
-/**
- * See 'dbus-protocol.h'.
- */
-static const struct symbol_mapping message_value_types[] = {
-    /* Type code that is never equal to a legitimate type code. */
-    { "invalid",     DBUS_TYPE_INVALID     },
-    /* Primitive data types. */
-    { "byte",        DBUS_TYPE_BYTE        },
-    { "boolean",     DBUS_TYPE_BOOLEAN     },
-    { "int16",       DBUS_TYPE_INT16       },
-    { "int32",       DBUS_TYPE_INT32       },
-    { "uint16",      DBUS_TYPE_UINT16      },
-    { "uint32",      DBUS_TYPE_UINT32      },
-    { "int64",       DBUS_TYPE_INT64       },
-    { "uint64",      DBUS_TYPE_UINT64      },
-    { "double",      DBUS_TYPE_DOUBLE      },
-    { "string",      DBUS_TYPE_STRING      },
-    { "object-path", DBUS_TYPE_OBJECT_PATH },
-    { "signature",   DBUS_TYPE_SIGNATURE   },
-    { "unix-fd",     DBUS_TYPE_UNIX_FD     },
-    /* Compound data types. */
-    { "array",       DBUS_TYPE_ARRAY       },
-    { "variant",     DBUS_TYPE_VARIANT     },
-    { "struct",      DBUS_TYPE_STRUCT      },
-    { "dict-entry",  DBUS_TYPE_DICT_ENTRY  },
-    { NULL,          -1                    }
-};
-
 GDBUS_DEFINE(gdbus_message_append_args, "%dbus-message-append-args", 3,
              (SCM message, SCM args),
              "Append arguments ARGS to the MESSAGE.")
@@ -200,8 +172,7 @@ GDBUS_DEFINE(gdbus_message_append_args, "%dbus-message-append-args", 3,
         if (scm_list_p(param)) {
             SCM scm_type  = scm_list_ref(param, scm_from_int(0));
             SCM scm_value = scm_list_ref(param, scm_from_int(1));
-            const struct symbol_mapping* symbol
-                = map_scm_to_const(message_value_types, scm_type);
+            const struct symbol_mapping* symbol = dbus_type_from_scm(scm_type);
             switch (symbol->value) {
             case DBUS_TYPE_BYTE: {
                 unsigned char value = scm_to_uchar(scm_value);
