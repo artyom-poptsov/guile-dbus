@@ -182,7 +182,7 @@ static const struct symbol_mapping message_value_types[] = {
 GDBUS_DEFINE(gdbus_message_append_args, "%dbus-message-append-args", 3,
              (SCM message, SCM args),
              "Append arguments ARGS to the MESSAGE.")
-#define FUNC_NAME s_gdbus_message_append
+#define FUNC_NAME s_gdbus_message_append_args
 {
     struct dbus_message_data* data = _scm_to_dbus_message_data(message);
     DBusMessageIter iter;
