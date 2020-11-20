@@ -151,7 +151,7 @@ GDBUS_DEFINE(gdbus_messsage_new_signal, "%make-dbus-message/signal", 3,
 }
 #undef FUNC_NAME
 
-GDBUS_DEFINE(gdbus_message_append_args, "%dbus-message-append-args", 3,
+GDBUS_DEFINE(gdbus_message_append_args, "%dbus-message-append-args", 2,
              (SCM message, SCM args),
              "Append arguments ARGS to the MESSAGE.")
 #define FUNC_NAME s_gdbus_message_append_args
