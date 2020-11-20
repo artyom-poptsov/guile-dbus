@@ -276,7 +276,7 @@ GDBUS_DEFINE(gdbus_message_get_args, "%dbus-message-get-args", 2,
             dbus_message_iter_get_basic(&iter, &c_value);
 
             SCM value = dbus_value_to_scm(c_type, c_value);
-            result = scm_append(scm_list_2(result, scm_list_2(type, value)));
+            result = scm_append(scm_list_2(result, scm_list_1(scm_list_2(type, value))));
 
             dbus_message_iter_next(&iter);
         }
