@@ -51,7 +51,7 @@
 (define (dbus-message-append-args message args)
   (%dbus-message-append messsage args))
 
-(define* (dbus-message-get-args message #:optional types)
+(define* (dbus-message-get-args message #:optional (types #f))
   (%dbus-message-get-args message types))
 
 
