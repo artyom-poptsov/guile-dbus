@@ -256,14 +256,14 @@ GDBUS_DEFINE(gdbus_message_get_args, "%dbus-message-get-args", 2,
         const struct symbol_mapping* required_type;
 
         for (int idx = 0; idx < types_count; ++idx) {
-            if (! dbus_message_iter_has_next(&iter)) {
+            int c_type = dbus_message_iter_get_arg_type(&iter);
+            if (c_type == DBUS_TYPE_INVALID) {
                 gdbus_error(FUNC_NAME, "Message has not enough arguments",
                             scm_list_2(message, types));
             }
 
             required_type
                 = dbus_type_from_scm(scm_list_ref(types, scm_from_int(idx)));
-            int c_type = dbus_message_iter_get_arg_type(&iter);
 
             if (c_type != required_type->value) {
                 gdbus_error(FUNC_NAME, "Types mismatch",
@@ -277,6 +277,8 @@ GDBUS_DEFINE(gdbus_message_get_args, "%dbus-message-get-args", 2,
 
             SCM value = dbus_value_to_scm(c_type, c_value);
             result = scm_append(scm_list_2(result, scm_list_2(type, value)));
+
+            dbus_message_iter_next(&iter);
         }
     }
 
