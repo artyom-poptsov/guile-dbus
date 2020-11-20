@@ -1,3 +1,4 @@
+#include <libguile.h>
 #include <dbus/dbus.h>
 
 #include "common.h"
@@ -41,4 +42,40 @@ SCM dbus_type_to_scm(int type)
 const struct symbol_mapping* dbus_type_from_scm(SCM type)
 {
     return map_scm_to_const(dbus_types, type);
+}
+
+SCM dbus_value_to_scm(int type, DBusBasicValue value)
+{
+    switch (type) {
+
+    case DBUS_TYPE_BYTE:
+        return scm_from_uchar(value.byt);
+
+    case DBUS_TYPE_INT16:
+        return scm_from_short(value.i16);
+
+    case DBUS_TYPE_INT32:
+        return scm_from_int32(value.i32);
+
+    case DBUS_TYPE_UINT16:
+        return scm_from_uint16(value.u16);
+
+    case DBUS_TYPE_UINT32:
+        return scm_from_uint32(value.u32);
+
+    case DBUS_TYPE_INT64:
+        return scm_from_int64(value.i64);
+
+    case DBUS_TYPE_UINT64:
+        return scm_from_uint64(value.u64);
+
+    case DBUS_TYPE_DOUBLE:
+        return scm_from_double(value.dbl);
+
+    case DBUS_TYPE_STRING:
+        return scm_from_locale_string(value.str);
+
+    default:
+        return SCM_BOOL_F;      /* The type is unsupported yet. */
+    }
 }

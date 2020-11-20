@@ -6,6 +6,7 @@
             make-dbus-message/method-return
             make-dbus-message/signal
             make-dbus-message/error
+            dbus-message-get-args
             dbus-message-set-interface
             dbus-message-get-interface
             dbus-message-has-interface?))
@@ -48,6 +49,9 @@
 
 (define (dbus-message-append-args message args)
   (%dbus-message-append messsage args))
+
+(define (dbus-message-get-args message #:optional types)
+  (%dbus-message-get-args message types))
 
 
 (load-extension "libguile-dbus" "init_dbus_message")

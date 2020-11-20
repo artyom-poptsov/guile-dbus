@@ -220,6 +220,70 @@ GDBUS_DEFINE(gdbus_message_append_args, "%dbus-message-append-args", 3,
 }
 #undef FUNC_NAME
 
+GDBUS_DEFINE(gdbus_message_get_args, "%dbus-message-get-args", 2,
+             (SCM message, SCM types),
+             "")
+#define FUNC_NAME s_gdbus_message_get_args
+{
+    struct dbus_message_data* data = _scm_to_dbus_message_data(message);
+    DBusMessageIter iter;
+    SCM result = scm_list_n(0);
+
+    SCM_ASSERT(scm_to_bool(scm_list_p(types)) || scm_is_false(types), types,
+               SCM_ARG2, FUNC_NAME);
+
+    if (scm_is_false(types)) {
+        if (! dbus_message_iter_init(data->message, &iter)) {
+            return result;
+        }
+
+        for (; dbus_message_iter_has_next(&iter); dbus_message_iter_next(&iter)) {
+            int c_type = dbus_message_iter_get_arg_type(&iter);
+            SCM type = dbus_type_to_scm(c_type);
+            DBusBasicValue c_value;
+
+            dbus_message_iter_get_basic(&iter, &c_value);
+
+            SCM value = dbus_value_to_scm(c_type, c_value);
+            result = scm_append(scm_list_2(result, scm_list_2(type, value)));
+        }
+    } else {
+        if (! dbus_message_iter_init(data->message, &iter)) {
+            gdbus_error(FUNC_NAME, "Message has no arguments", message);
+        }
+
+        int types_count = scm_to_int(scm_length(types));
+        const struct symbol_mapping* required_type;
+
+        for (int idx = 0; idx < types_count; ++idx) {
+            if (! dbus_message_iter_has_next(&iter)) {
+                gdbus_error(FUNC_NAME, "Message has not enough arguments",
+                            scm_list_2(message, types));
+            }
+
+            required_type
+                = dbus_type_from_scm(scm_list_ref(types, scm_from_int(idx)));
+            int c_type = dbus_message_iter_get_arg_type(&iter);
+
+            if (c_type != required_type->value) {
+                gdbus_error(FUNC_NAME, "Types mismatch",
+                            scm_list_3(message, types, scm_from_int(idx)));
+            }
+
+            SCM type = dbus_type_to_scm(c_type);
+            DBusBasicValue c_value;
+
+            dbus_message_iter_get_basic(&iter, &c_value);
+
+            SCM value = dbus_value_to_scm(c_type, c_value);
+            result = scm_append(scm_list_2(result, scm_list_2(type, value)));
+        }
+    }
+
+    return result;
+}
+#undef FUNC_NAME
+
 GDBUS_DEFINE(gdbus_message_set_interface, "%dbus-message-set-interface", 2,
              (SCM message, SCM iface),
     "\
