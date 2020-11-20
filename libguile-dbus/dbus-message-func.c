@@ -227,7 +227,7 @@ GDBUS_DEFINE(gdbus_message_get_args, "%dbus-message-get-args", 2,
 {
     struct dbus_message_data* data = _scm_to_dbus_message_data(message);
     DBusMessageIter iter;
-    SCM result = scm_list_n(0);
+    SCM result = scm_list_n(SCM_UNDEFINED);
 
     SCM_ASSERT(scm_to_bool(scm_list_p(types)) || scm_is_false(types), types,
                SCM_ARG2, FUNC_NAME);
