@@ -39,7 +39,7 @@ static int _print(SCM obj, SCM port, scm_print_state* pstate)
     return 1;
 }
 
-gdbus_connection_t* _allocate_dbus_connection_data()
+gdbus_connection_t* make_gdbus_connection()
 {
     return scm_gc_malloc(sizeof(gdbus_connection_t),
                          GDBUS_CONNECTION_TYPE_NAME);
@@ -48,7 +48,7 @@ gdbus_connection_t* _allocate_dbus_connection_data()
 SCM _scm_from_dbus_connection(DBusConnection* conn, DBusBusType type)
 {
     SCM smob;
-    gdbus_connection_t* gdbus_conn = _allocate_dbus_connection_data();
+    gdbus_connection_t* gdbus_conn = make_gdbus_connection();
 
     gdbus_conn->type = type;
     gdbus_conn->conn = conn;
