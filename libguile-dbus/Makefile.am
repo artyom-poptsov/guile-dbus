@@ -37,7 +37,8 @@ libguile_dbus_la_SOURCES = \
 	dbus-message-func.c		\
 	dbus-message-main.c		\
 	dbus-pending-call-type.h	\
-	dbus-pending-call-type.c
+	dbus-pending-call-type.c	\
+	dbus-pending-call-main.c
 
 BUILT_SOURCES = \
 	dbus-connection-type.x 		\

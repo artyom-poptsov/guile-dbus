@@ -14,4 +14,6 @@
   (%dbus-connection-send/with-reply connection message timeout))
 
 
+(load-extension "libguile-dbus" "init_dbus_pending_call")
 (load-extension "libguile-dbus" "init_dbus_connection")
+
