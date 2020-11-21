@@ -2,7 +2,7 @@
 #include <dbus/dbus.h>
 
 #include "common.h"
-#include "dbus-type.h"
+#include "symbols.h"
 
 
 /**
