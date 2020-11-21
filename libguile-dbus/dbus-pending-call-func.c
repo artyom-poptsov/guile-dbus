@@ -28,6 +28,17 @@ or error received will just be ignored.")
 }
 #undef FUNC_NAME
 
+GDBUS_DEFINE(gdbus_pending_call_steal_reply, "dbus-pending-call-steal-reply", 1,
+             (SCM call),
+    "")
+#define FUNC_NAME s_gdbus_pending_call_steal_reply
+{
+    gdbus_pending_call_t* gdbus_call = gdbus_pending_call_from_scm(call);
+    DBusMessage* msg = dbus_pending_call_steal_reply(gdbus_call->call);
+    return msg ?  dbus_message_to_scm(msg) : SCM_BOOL_F;
+}
+#undef FUNC_NAME
+
 
 void init_dbus_pending_call_func()
 {
