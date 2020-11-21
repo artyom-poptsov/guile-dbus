@@ -2,7 +2,7 @@
 #include <dbus/dbus.h>
 
 #include "common.h"
-#include "dbus-pending-call.h"
+#include "dbus-pending-call-type.h"
 
 
 static const char* GDBUS_PENDING_CALL_TYPE_NAME = "dbus-pending-call";
@@ -72,6 +72,6 @@ void init_dbus_pending_call_type()
     scm_set_smob_print(dbus_pending_call_tag,  print_dbus_pending_call);
     scm_set_smob_equalp(dbus_pending_call_tag, equalp_dbus_pending_call);
 
-#include "dbus-pending-call.x"
+#include "dbus-pending-call-type.x"
 }
 

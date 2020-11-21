@@ -20,28 +20,28 @@ include $(top_srcdir)/am/snarf
 lib_LTLIBRARIES = libguile-dbus.la
 
 libguile_dbus_la_SOURCES = \
-	common.h		\
-	common.c		\
-	error.h			\
-	error.c			\
-	dbus-type.h		\
-	dbus-type.c		\
-	dbus-connection-type.c	\
-	dbus-connection-type.h	\
-	dbus-connection-main.c	\
-	dbus-message-type.h	\
-	dbus-message-type.c	\
-	dbus-message-func.h	\
-	dbus-message-func.c	\
-	dbus-message-main.c	\
-	dbus-pending-call.h	\
-	dbus-pending-call.c
+	common.h			\
+	common.c			\
+	error.h				\
+	error.c				\
+	dbus-type.h			\
+	dbus-type.c			\
+	dbus-connection-type.c		\
+	dbus-connection-type.h		\
+	dbus-connection-main.c		\
+	dbus-message-type.h		\
+	dbus-message-type.c		\
+	dbus-message-func.h		\
+	dbus-message-func.c		\
+	dbus-message-main.c		\
+	dbus-pending-call-type.h	\
+	dbus-pending-call-type.c
 
 BUILT_SOURCES = \
-	dbus-connection-type.x 	\
-	dbus-message-type.x	\
-	dbus-message-func.x	\
-	dbus-pending-call.x
+	dbus-connection-type.x 		\
+	dbus-message-type.x		\
+	dbus-message-func.x		\
+	dbus-pending-call-type.x
 
 libguile_dbus_la_CPPFLAGS = $(CFLAGS) $(GUILE_CFLAGS) $(DBUS_CFLAGS)
 
