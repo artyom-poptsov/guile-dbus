@@ -58,7 +58,7 @@ SCM dbus_type_to_scm(int type)
     return map_const_to_scm(dbus_types, type);
 }
 
-const struct symbol_mapping* dbus_type_from_scm(SCM type)
+const symbol_mapping_t* dbus_type_from_scm(SCM type)
 {
     return map_scm_to_const(dbus_types, type);
 }
@@ -105,7 +105,7 @@ SCM dbus_message_type_to_scm(int type)
     return map_const_to_scm(dbus_message_types, type);
 }
 
-const struct symbol_mapping* dbus_message_type_from_scm(SCM type)
+const symbol_mapping_t* dbus_message_type_from_scm(SCM type)
 {
     return map_scm_to_const(dbus_message_types, type);
 }
@@ -117,7 +117,7 @@ SCM dbus_bus_type_to_scm(DBusBusType type)
     return map_const_to_scm(dbus_bus_types, type);
 }
 
-const struct symbol_mapping* dbus_bus_type_from_scm(SCM type)
+const symbol_mapping_t* dbus_bus_type_from_scm(SCM type)
 {
     return map_scm_to_const(dbus_bus_types, type);
 }

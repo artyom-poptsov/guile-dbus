@@ -15,16 +15,14 @@ struct symbol_mapping {
     int   value;
 };
 
+typedef struct symbol_mapping symbol_mapping_t;
+
 
 /* Procedures. */
 
-SCM map_const_to_scm (
-    const struct symbol_mapping *types,
-    int value);
-
-const struct symbol_mapping* map_scm_to_const (
-    const struct symbol_mapping *types,
-    SCM value);
+SCM map_const_to_scm(const symbol_mapping_t* types, int value);
+const symbol_mapping_t* map_scm_to_const(const symbol_mapping_t* types,
+                                         SCM value);
 
 SCM scm_object_hex_address (SCM obj);
 SCM compare_objects(SCM x1, SCM x2, void* (*converter)(SCM x));

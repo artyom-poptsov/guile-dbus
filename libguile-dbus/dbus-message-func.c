@@ -10,7 +10,7 @@ GDBUS_DEFINE(gdbus_make_dbus_message, "%make-dbus-message", 1, (SCM type),
              "Make a DBus message")
 #define FUNC_NAME s_gdbus_make_dbus_message
 {
-    const struct symbol_mapping* c_type = dbus_message_type_from_scm(type);
+    const symbol_mapping_t* c_type = dbus_message_type_from_scm(type);
     DBusMessage* message = dbus_message_new(c_type->value);
     return dbus_message_to_scm(message);
 }
@@ -172,7 +172,7 @@ GDBUS_DEFINE(gdbus_message_append_args, "%dbus-message-append-args", 2,
         if (scm_list_p(param)) {
             SCM scm_type  = scm_list_ref(param, scm_from_int(0));
             SCM scm_value = scm_list_ref(param, scm_from_int(1));
-            const struct symbol_mapping* symbol = dbus_type_from_scm(scm_type);
+            const symbol_mapping_t* symbol = dbus_type_from_scm(scm_type);
             switch (symbol->value) {
             case DBUS_TYPE_BYTE: {
                 unsigned char value = scm_to_uchar(scm_value);
@@ -253,7 +253,7 @@ GDBUS_DEFINE(gdbus_message_get_args, "%dbus-message-get-args", 2,
         }
 
         int types_count = scm_to_int(scm_length(types));
-        const struct symbol_mapping* required_type;
+        const symbol_mapping_t* required_type;
 
         for (int idx = 0; idx < types_count; ++idx) {
             int c_type = dbus_message_iter_get_arg_type(&iter);

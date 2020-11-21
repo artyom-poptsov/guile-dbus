@@ -12,7 +12,7 @@ GDBUS_DEFINE(gdbus_make_dbus_connection, "%make-dbus-connection", 1, (SCM type),
              "Make a DBus connection.")
 #define FUNC_NAME s_gdbus_make_dbus_connection
 {
-    const struct symbol_mapping* c_type = dbus_bus_type_from_scm(type);
+    const symbol_mapping_t* c_type = dbus_bus_type_from_scm(type);
     DBusError error;
     dbus_error_init(&error);
     DBusConnection* conn = dbus_bus_get(c_type->value, &error);

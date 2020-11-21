@@ -4,7 +4,7 @@
 #include "common.h"
 
 /* Convert the a VALUE to a Scheme symbol */
-SCM map_const_to_scm(const struct symbol_mapping *types, int value)
+SCM map_const_to_scm(const symbol_mapping_t* types, int value)
 {
     const struct symbol_mapping *t;
     for (t = types; t->symbol; ++t) {
@@ -18,10 +18,10 @@ SCM map_const_to_scm(const struct symbol_mapping *types, int value)
 
    Return the apropriate structure that contains the needed
    constant. */
-const struct symbol_mapping* map_scm_to_const(const struct symbol_mapping *types,
-                                              SCM value)
+const symbol_mapping_t* map_scm_to_const(const symbol_mapping_t* types,
+                                         SCM value)
 {
-    const struct symbol_mapping *t;
+    const symbol_mapping_t* t;
     char *sym = scm_to_locale_string (scm_symbol_to_string (value));
     for (t = types; t->symbol; ++t)
     {
