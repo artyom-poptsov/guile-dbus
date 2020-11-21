@@ -13,6 +13,9 @@ struct gdbus_pending_call {
     DBusPendingCall* call;
 };
 
+typedef struct gdbus_pending_call gdbus_pending_call_t;
+
+
 SCM _scm_from_dbus_pending_call(DBusPendingCall* call);
 struct gdbus_pending_call* _scm_to_gdbus_pending_call(SCM x);
 

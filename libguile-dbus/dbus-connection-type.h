@@ -7,7 +7,7 @@
 /**
  * Guile-DBus connection SMOB data.
  */
-struct dbus_connection_data {
+struct gdbus_connection {
     /**
      * Pointer to a DBus connection object.
      */
@@ -19,10 +19,13 @@ struct dbus_connection_data {
     DBusBusType type;
 };
 
+typedef struct gdbus_connection gdbus_connection_t;
+
+
 void init_dbus_connection_type();
 
 
-struct dbus_connection_data* _scm_to_dbus_connection_data(SCM x);
+gdbus_connection_t* _scm_to_dbus_connection_data(SCM x);
 SCM _scm_from_dbus_connection(DBusConnection* conn, DBusBusType type);
 SCM dbus_bus_type_to_scm(DBusBusType type);
 

@@ -33,10 +33,9 @@ Throws guile-dbus-error on OOM errors.\
 ")
 #define FUNC_NAME s_gdbus_connection_send
 {
-    const struct dbus_connection_data* conn_data
+    const gdbus_connection_t* conn_data
         = _scm_to_dbus_connection_data(connection);
-    const struct dbus_message_data* msg_data
-        = _scm_to_dbus_message_data(message);
+    const gdbus_message_t* msg_data = _scm_to_dbus_message_data(message);
     dbus_bool_t result = dbus_connection_send(conn_data->conn,
                                               msg_data->message,
                                               NULL);
@@ -56,10 +55,9 @@ Queues a message to send.\
 ")
 #define FUNC_NAME s_gdbus_connection_send_with_reply
 {
-    const struct dbus_connection_data* conn_data
+    const gdbus_connection_t* conn_data
         = _scm_to_dbus_connection_data(connection);
-    const struct dbus_message_data* msg_data
-        = _scm_to_dbus_message_data(message);
+    const gdbus_message_t* msg_data = _scm_to_dbus_message_data(message);
     int c_timeout = scm_to_int(timeout);
     DBusPendingCall* call;
     dbus_bool_t result = dbus_connection_send_with_reply(conn_data->conn,

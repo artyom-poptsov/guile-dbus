@@ -14,12 +14,14 @@ extern const struct symbol_mapping message_types[];
 /**
  * Guile-DBus message SMOB data.
  */
-struct dbus_message_data {
+struct gdbus_message {
     DBusMessage* message;
 };
 
+typedef struct gdbus_message gdbus_message_t;
+
 
-struct dbus_message_data* _scm_to_dbus_message_data(SCM x);
+gdbus_message_t* _scm_to_dbus_message_data(SCM x);
 SCM _scm_from_dbus_message(DBusMessage* message);
 
 
