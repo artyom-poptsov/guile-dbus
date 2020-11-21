@@ -33,12 +33,15 @@ libguile_dbus_la_SOURCES = \
 	dbus-message-type.c	\
 	dbus-message-func.h	\
 	dbus-message-func.c	\
-	dbus-message-main.c
+	dbus-message-main.c	\
+	dbus-pending-call.h	\
+	dbus-pending-call.c
 
 BUILT_SOURCES = \
 	dbus-connection-type.x 	\
 	dbus-message-type.x	\
-	dbus-message-func.x
+	dbus-message-func.x	\
+	dbus-pending-call.x
 
 libguile_dbus_la_CPPFLAGS = $(CFLAGS) $(GUILE_CFLAGS) $(DBUS_CFLAGS)
 
