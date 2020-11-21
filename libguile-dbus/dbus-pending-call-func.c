@@ -38,6 +38,17 @@ GDBUS_DEFINE(gdbus_pending_call_steal_reply, "dbus-pending-call-steal-reply", 1,
 }
 #undef FUNC_NAME
 
+GDBUS_DEFINE(gdbus_pending_call_completed_p, "dbus-pending-call-completed?", 1,
+             (SCM call),
+    "\
+Checks whether the pending call has received a reply yet, or not. ")
+#define FUNC_NAME s_gdbus_pending_call_completed_p
+{
+    DBusPendingCall* c_call = dbus_pending_call_from_scm(call);
+    return scm_from_bool(dbus_pending_call_get_completed(c_call));
+}
+#undef FUNC_NAME
+
 
 void init_dbus_pending_call_func()
 {
