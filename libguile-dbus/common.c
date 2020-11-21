@@ -1,4 +1,5 @@
 #include <libguile.h>
+#include <string.h>
 
 #include "common.h"
 
