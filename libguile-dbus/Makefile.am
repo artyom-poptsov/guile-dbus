@@ -28,6 +28,8 @@ libguile_dbus_la_SOURCES = \
 	dbus-type.c			\
 	dbus-connection-type.c		\
 	dbus-connection-type.h		\
+	dbus-connection-func.h		\
+	dbus-connection-func.c		\
 	dbus-connection-main.c		\
 	dbus-message-type.h		\
 	dbus-message-type.c		\
@@ -39,6 +41,7 @@ libguile_dbus_la_SOURCES = \
 
 BUILT_SOURCES = \
 	dbus-connection-type.x 		\
+	dbus-connection-func.x		\
 	dbus-message-type.x		\
 	dbus-message-func.x		\
 	dbus-pending-call-type.x
