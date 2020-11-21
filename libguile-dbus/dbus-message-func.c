@@ -2,7 +2,7 @@
 #include <libguile.h>
 
 #include "common.h"
-#include "dbus-type.h"
+#include "symbols.h"
 #include "error.h"
 #include "dbus-message-type.h"
 

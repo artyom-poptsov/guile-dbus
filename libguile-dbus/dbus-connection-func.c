@@ -3,7 +3,7 @@
 
 #include "common.h"
 #include "error.h"
-#include "dbus-type.h"
+#include "symbols.h"
 #include "dbus-connection-type.h"
 
 GDBUS_DEFINE(gdbus_make_dbus_connection, "%make-dbus-connection", 1, (SCM type),
