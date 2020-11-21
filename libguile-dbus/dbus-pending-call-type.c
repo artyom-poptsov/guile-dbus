@@ -16,7 +16,7 @@ static SCM _mark(SCM obj)
 
 static size_t _free(SCM obj)
 {
-    gdbus_pending_call_t* data = _scm_to_gdbus_pending_call(obj);
+    gdbus_pending_call_t* data = gdbus_pending_call_from_scm(obj);
     dbus_pending_call_unref(data->call);
     return 0;
 }
@@ -35,7 +35,7 @@ static int _print(SCM obj, SCM port, scm_print_state* pstate)
 static SCM _equalp(SCM x1, SCM x2)
 {
     return compare_objects(x1, x2,
-                           (void* (*)(SCM x)) _scm_to_gdbus_pending_call);
+                           (void* (*)(SCM x)) gdbus_pending_call_from_scm);
 }
 
 
@@ -46,7 +46,7 @@ gdbus_pending_call_t* make_dbus_pending_call_data()
 }
 
 
-SCM _scm_from_dbus_pending_call(DBusPendingCall* call)
+SCM dbus_pending_call_to_scm(DBusPendingCall* call)
 {
     SCM smob;
     gdbus_pending_call_t* gdbus_call = make_dbus_pending_call_data();
@@ -55,7 +55,7 @@ SCM _scm_from_dbus_pending_call(DBusPendingCall* call)
     return smob;
 }
 
-gdbus_pending_call_t* _scm_to_gdbus_pending_call(SCM x)
+gdbus_pending_call_t* gdbus_pending_call_from_scm(SCM x)
 {
     scm_assert_smob_type(gdbus_pending_call_tag, x);
     return (gdbus_pending_call_t*) SCM_SMOB_DATA(x);

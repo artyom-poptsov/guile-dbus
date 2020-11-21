@@ -68,7 +68,7 @@ Queues a message to send.\
                     scm_list_3(connection, message, timeout));
     }
 
-    return _scm_from_dbus_pending_call(call);
+    return dbus_pending_call_to_scm(call);
 }
 #undef FUNC_NAME
 
