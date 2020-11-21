@@ -351,6 +351,20 @@ Checks if the message has an INTERFACE. \
 }
 #undef FUNC_NAME
 
+GDBUS_DEFINE(gdbus_message_get_sender, "dbus-message-get-sender", 1,
+             (SCM message),
+             "\
+Gets the unique name of the connection which originated this message, \
+or SCM_BOOL_F if unknown or inapplicable.\
+")
+#define FUNC_NAME s_gdbus_message_get_sender
+{
+    struct dbus_message_data* data = _scm_to_dbus_message_data(message);
+    char* result = dbus_message_get_sender(data->message);
+    return result ? scm_from_locale_string(result) : SCM_BOOL_F;
+}
+#undef FUNC_NAME
+
 GDBUS_DEFINE(gdbus_message_get_serial, "dbus-message-get-serial", 1,
              (SCM message),
     "Returns the serial of a message or 0 if none has been specified.")

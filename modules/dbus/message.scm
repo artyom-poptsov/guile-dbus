@@ -11,6 +11,7 @@
             dbus-message-set-interface
             dbus-message-get-interface
             dbus-message-has-interface?
+            dbus-message-get-sender
             dbus-message-get-serial))
 
 
