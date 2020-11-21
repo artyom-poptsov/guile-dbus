@@ -9,8 +9,7 @@ GDBUS_DEFINE(gdbus_pending_call_block, "dbus-pending-call-block", 1,
              "Block until the pending call is completed. ")
 #define FUNC_NAME s_gdbus_pending_call_block
 {
-    gdbus_pending_call_t* gdbus_call = gdbus_pending_call_from_scm(call);
-    dbus_pending_call_block(gdbus_call->call);
+    dbus_pending_call_block(dbus_pending_call_from_scm(call));
     return SCM_UNDEFINED;
 }
 #undef FUNC_NAME
@@ -22,8 +21,7 @@ Cancels the pending call, such that any reply \
 or error received will just be ignored.")
 #define FUNC_NAME s_gdbus_pending_call_cancel
 {
-    gdbus_pending_call_t* gdbus_call = gdbus_pending_call_from_scm(call);
-    dbus_pending_call_cancel(gdbus_call->call);
+    dbus_pending_call_cancel(dbus_pending_call_from_scm(call));
     return SCM_UNDEFINED;
 }
 #undef FUNC_NAME
@@ -33,8 +31,8 @@ GDBUS_DEFINE(gdbus_pending_call_steal_reply, "dbus-pending-call-steal-reply", 1,
     "")
 #define FUNC_NAME s_gdbus_pending_call_steal_reply
 {
-    gdbus_pending_call_t* gdbus_call = gdbus_pending_call_from_scm(call);
-    DBusMessage* msg = dbus_pending_call_steal_reply(gdbus_call->call);
+    DBusPendingCall* c_call = dbus_pending_call_from_scm(call);
+    DBusMessage* msg = dbus_pending_call_steal_reply(c_call);
     return msg ?  dbus_message_to_scm(msg) : SCM_BOOL_F;
 }
 #undef FUNC_NAME

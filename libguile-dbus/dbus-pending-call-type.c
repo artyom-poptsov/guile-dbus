@@ -55,6 +55,11 @@ SCM dbus_pending_call_to_scm(DBusPendingCall* call)
     return smob;
 }
 
+DBusPendingCall* dbus_pending_call_from_scm(SCM x)
+{
+    return gdbus_pending_call_from_scm(x)->call;
+}
+
 gdbus_pending_call_t* gdbus_pending_call_from_scm(SCM x)
 {
     scm_assert_smob_type(gdbus_pending_call_tag, x);
