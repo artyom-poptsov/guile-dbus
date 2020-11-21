@@ -45,6 +45,13 @@ static const struct symbol_mapping dbus_message_types[] = {
     { NULL,            -1                              }
 };
 
+static const struct symbol_mapping dbus_bus_types[] = {
+    { "session", DBUS_BUS_SESSION },
+    { "system",  DBUS_BUS_SYSTEM  },
+    { "starter", DBUS_BUS_STARTER },
+    { NULL,      -1               }
+};
+
 
 SCM dbus_type_to_scm(int type)
 {
@@ -101,4 +108,16 @@ SCM dbus_message_type_to_scm(int type)
 const struct symbol_mapping* dbus_message_type_from_scm(SCM type)
 {
     return map_scm_to_const(dbus_message_types, type);
+}
+
+
+
+SCM dbus_bus_type_to_scm(DBusBusType type)
+{
+    return map_const_to_scm(dbus_bus_types, type);
+}
+
+const struct symbol_mapping* dbus_bus_type_from_scm(SCM type)
+{
+    return map_scm_to_const(dbus_bus_types, type);
 }

@@ -10,13 +10,6 @@ static const char* GDBUS_CONNECTION_TYPE_NAME = "dbus-connection";
 
 scm_t_bits dbus_connection_tag;
 
-static const struct symbol_mapping bus_types[] = {
-    { "session", DBUS_BUS_SESSION },
-    { "system",  DBUS_BUS_SYSTEM  },
-    { "starter", DBUS_BUS_STARTER },
-    { NULL,      -1               }
-};
-
 
 static SCM _mark(SCM dbus_connection)
 {
@@ -45,12 +38,6 @@ static int _print(SCM obj, SCM port, scm_print_state* pstate)
     scm_display(dbus_bus_type_to_scm(gdbus_conn->type), port);
     scm_puts(">", port);
     return 1;
-}
-
-
-SCM dbus_bus_type_to_scm(DBusBusType type)
-{
-    return map_const_to_scm(bus_types, type);
 }
 
 struct dbus_connection_data* _allocate_dbus_connection_data()
@@ -83,7 +70,7 @@ GDBUS_DEFINE(gdbus_make_dbus_connection, "%make-dbus-connection", 1, (SCM type),
              "Make a DBus connection.")
 #define FUNC_NAME s_gdbus_make_dbus_connection
 {
-    const struct symbol_mapping* c_type = map_scm_to_const(bus_types, type);
+    const struct symbol_mapping* c_type = dbus_bus_type_from_scm(type);
     DBusError error;
     dbus_error_init(&error);
     DBusConnection* conn = dbus_bus_get(c_type->value, &error);
