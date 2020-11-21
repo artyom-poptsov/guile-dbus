@@ -4,17 +4,17 @@
 #include <libguile.h>
 #include <dbus/dbus.h>
 
-extern scm_t_bits dbus_pending_call_tag;
+extern scm_t_bits gdbus_pending_call_tag;
 
 /**
  * Guile-DBus message SMOB data.
  */
-struct dbus_pending_call_data {
+struct gdbus_pending_call {
     DBusPendingCall* call;
 };
 
 SCM _scm_from_dbus_pending_call(DBusPendingCall* call);
-struct dbus_pending_call_data* _scm_to_dbus_pending_call_data(SCM x);
+struct gdbus_pending_call* _scm_to_gdbus_pending_call(SCM x);
 
 void init_dbus_pending_call_type();
 
