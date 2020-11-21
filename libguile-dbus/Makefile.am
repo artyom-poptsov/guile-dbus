@@ -38,6 +38,8 @@ libguile_dbus_la_SOURCES = \
 	dbus-message-main.c		\
 	dbus-pending-call-type.h	\
 	dbus-pending-call-type.c	\
+	dbus-pending-call-func.h	\
+	dbus-pending-call-func.c	\
 	dbus-pending-call-main.c
 
 BUILT_SOURCES = \
@@ -45,7 +47,8 @@ BUILT_SOURCES = \
 	dbus-connection-func.x		\
 	dbus-message-type.x		\
 	dbus-message-func.x		\
-	dbus-pending-call-type.x
+	dbus-pending-call-type.x	\
+	dbus-pending-call-func.x
 
 libguile_dbus_la_CPPFLAGS = $(CFLAGS) $(GUILE_CFLAGS) $(DBUS_CFLAGS)
 
