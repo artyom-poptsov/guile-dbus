@@ -34,15 +34,8 @@ static int print_dbus_pending_call(SCM obj, SCM port, scm_print_state* pstate)
 
 static SCM equalp_dbus_pending_call(SCM x1, SCM x2)
 {
-    struct dbus_pending_call_data* d1 = _scm_to_dbus_pending_call_data(x1);
-    struct dbus_pending_call_data* d2 = _scm_to_dbus_pending_call_data(x2);
-    if ((! d1) || (! d2)) {
-        return SCM_BOOL_F;
-    } else if (d1 != d2) {
-        return SCM_BOOL_F;
-    } else {
-        return SCM_BOOL_T;
-    }
+    return compare_objects(x1, x2,
+                           (void* (*)(SCM x)) _scm_to_dbus_pending_call_data);
 }
 
 

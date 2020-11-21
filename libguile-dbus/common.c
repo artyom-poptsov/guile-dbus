@@ -37,3 +37,16 @@ SCM scm_object_hex_address(SCM obj)
 {
     return scm_number_to_string(scm_object_address(obj), scm_from_uint(16U));
 }
+
+SCM compare_objects(SCM x1, SCM x2, void* (*converter)(SCM x))
+{
+    void* d1 = converter(x1);
+    void* d2 = converter(x2);
+    if ((! d1) || (! d2)) {
+        return SCM_BOOL_F;
+    } else if (d1 != d2) {
+        return SCM_BOOL_F;
+    } else {
+        return SCM_BOOL_T;
+    }
+}

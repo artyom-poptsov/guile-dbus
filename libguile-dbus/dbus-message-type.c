@@ -22,15 +22,8 @@ static size_t free_dbus_message(SCM message)
 
 static SCM equalp_dbus_message(SCM x1, SCM x2)
 {
-    struct dbus_message_data* d1 = _scm_to_dbus_message_data(x1);
-    struct dbus_message_data* d2 = _scm_to_dbus_message_data(x2);
-    if ((! d1) || (! d2)) {
-        return SCM_BOOL_F;
-    } else if (d1 != d2) {
-        return SCM_BOOL_F;
-    } else {
-        return SCM_BOOL_T;
-    }
+    return compare_objects(x1, x2,
+                           (void* (*)(SCM x)) _scm_to_dbus_message_data);
 }
 
 static int print_dbus_message(SCM obj, SCM port, scm_print_state* pstate)

@@ -33,15 +33,8 @@ static size_t free_dbus_connection(SCM dbus_connection)
 
 static SCM equalp_dbus_connection(SCM x1, SCM x2)
 {
-    struct dbus_connection_data* d1 = _scm_to_dbus_connection_data(x1);
-    struct dbus_connection_data* d2 = _scm_to_dbus_connection_data(x2);
-    if ((! d1) || (! d2)) {
-        return SCM_BOOL_F;
-    } else if (d1 != d2) {
-        return SCM_BOOL_F;
-    } else {
-        return SCM_BOOL_T;
-    }
+    return compare_objects(x1, x2,
+                           (void* (*)(SCM x)) _scm_to_dbus_connection_data);
 }
 
 static int print_dbus_connection(SCM obj, SCM port, scm_print_state* pstate)

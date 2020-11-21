@@ -9,6 +9,12 @@
   (let ((message (make-dbus-message 'method-call)))
     (dbus-message? message)))
 
+(test-assert "equal?"
+  (let ((m1 (make-dbus-message 'method-call))
+        (m2 (make-dbus-message 'method-call)))
+    (and (equal? m1 m1)
+         (not (equal? m1 m2)))))
+
 (test-assert "dbus-message-{set,get}-interface"
   (let ((message (make-dbus-message 'method-call)))
     (dbus-message-set-interface message "org.freedesktop.DBus.Introspectable")

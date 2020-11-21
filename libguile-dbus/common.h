@@ -27,5 +27,6 @@ const struct symbol_mapping* map_scm_to_const (
     SCM value);
 
 SCM scm_object_hex_address (SCM obj);
+SCM compare_objects(SCM x1, SCM x2, void* (*converter)(SCM x));
 
 #endif  /* ifndef __COMMON_H__ */
