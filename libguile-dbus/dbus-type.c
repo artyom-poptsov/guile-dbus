@@ -33,6 +33,18 @@ static const struct symbol_mapping dbus_types[] = {
     { NULL,          -1                    }
 };
 
+/**
+ * See 'dbus-protocol.h'.
+ */
+static const struct symbol_mapping dbus_message_types[] = {
+    { "invalid",       DBUS_MESSAGE_TYPE_INVALID       },
+    { "method-call",   DBUS_MESSAGE_TYPE_METHOD_CALL   },
+    { "method-return", DBUS_MESSAGE_TYPE_METHOD_RETURN },
+    { "error",         DBUS_MESSAGE_TYPE_ERROR         },
+    { "signal",        DBUS_MESSAGE_TYPE_SIGNAL        },
+    { NULL,            -1                              }
+};
+
 
 SCM dbus_type_to_scm(int type)
 {
@@ -78,4 +90,15 @@ SCM dbus_value_to_scm(int type, DBusBasicValue value)
     default:
         return SCM_BOOL_F;      /* The type is unsupported yet. */
     }
+}
+
+
+SCM dbus_message_type_to_scm(int type)
+{
+    return map_const_to_scm(dbus_message_types, type);
+}
+
+const struct symbol_mapping* dbus_message_type_from_scm(SCM type)
+{
+    return map_scm_to_const(dbus_message_types, type);
 }

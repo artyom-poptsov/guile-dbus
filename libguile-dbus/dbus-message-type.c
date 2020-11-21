@@ -8,18 +8,6 @@ static const char* GDBUS_MESSAGE_TYPE_NAME = "dbus-message";
 
 scm_t_bits dbus_message_tag;
 
-/**
- * See 'dbus-protocol.h'.
- */
-const struct symbol_mapping message_types[] = {
-    { "invalid",       DBUS_MESSAGE_TYPE_INVALID       },
-    { "method-call",   DBUS_MESSAGE_TYPE_METHOD_CALL   },
-    { "method-return", DBUS_MESSAGE_TYPE_METHOD_RETURN },
-    { "error",         DBUS_MESSAGE_TYPE_ERROR         },
-    { "signal",        DBUS_MESSAGE_TYPE_SIGNAL        },
-    { NULL,            -1                              }
-};
-
 static SCM mark_dbus_message(SCM dbus_message)
 {
     return SCM_BOOL_F;
