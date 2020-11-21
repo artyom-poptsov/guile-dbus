@@ -351,6 +351,16 @@ Checks if the message has an INTERFACE. \
 }
 #undef FUNC_NAME
 
+GDBUS_DEFINE(gdbus_message_get_serial, "dbus-message-get-serial", 1,
+             (SCM message),
+    "Returns the serial of a message or 0 if none has been specified.")
+#define FUNC_NAME s_gdbus_message_get_serial
+{
+    struct dbus_message_data* data = _scm_to_dbus_message_data(message);
+    return scm_from_int(dbus_message_get_serial(data->message));
+}
+#undef FUNC_NAME
+
 
 void init_dbus_message_func()
 {

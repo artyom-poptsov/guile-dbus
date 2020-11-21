@@ -10,7 +10,8 @@
             dbus-message-get-args
             dbus-message-set-interface
             dbus-message-get-interface
-            dbus-message-has-interface?))
+            dbus-message-has-interface?
+            dbus-message-get-serial))
 
 
 (define (make-dbus-message type)
