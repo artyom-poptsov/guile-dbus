@@ -1,4 +1,5 @@
 #include "dbus-connection-type.h"
+#include "dbus-connection-func.h"
 
 void init_dbus_connection()
 {
