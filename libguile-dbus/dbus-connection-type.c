@@ -18,7 +18,7 @@ static SCM _mark(SCM dbus_connection)
 
 static size_t _free(SCM obj)
 {
-    gdbus_connection_t* gdbus_conn = _scm_to_dbus_connection_data(obj);
+    gdbus_connection_t* gdbus_conn = gdbus_connection_from_scm(obj);
     dbus_connection_close(gdbus_conn->conn);
     return 0;
 }
@@ -26,13 +26,13 @@ static size_t _free(SCM obj)
 static SCM _equalp(SCM x1, SCM x2)
 {
     return compare_objects(x1, x2,
-                           (void* (*)(SCM x)) _scm_to_dbus_connection_data);
+                           (void* (*)(SCM x)) gdbus_connection_from_scm);
 }
 
 static int _print(SCM obj, SCM port, scm_print_state* pstate)
 {
     (void) pstate;
-    gdbus_connection_t* gdbus_conn = _scm_to_dbus_connection_data(obj);
+    gdbus_connection_t* gdbus_conn = gdbus_connection_from_scm(obj);
     scm_puts("#<dbus-connection ", port);
     scm_display(dbus_bus_type_to_scm(gdbus_conn->type), port);
     scm_puts(">", port);
@@ -45,7 +45,7 @@ gdbus_connection_t* make_gdbus_connection()
                          GDBUS_CONNECTION_TYPE_NAME);
 }
 
-SCM _scm_from_dbus_connection(DBusConnection* conn, DBusBusType type)
+SCM dbus_connection_to_scm(DBusConnection* conn, DBusBusType type)
 {
     SCM smob;
     gdbus_connection_t* gdbus_conn = make_gdbus_connection();
@@ -58,7 +58,7 @@ SCM _scm_from_dbus_connection(DBusConnection* conn, DBusBusType type)
     return smob;
 }
 
-gdbus_connection_t* _scm_to_dbus_connection_data(SCM x)
+gdbus_connection_t* gdbus_connection_from_scm(SCM x)
 {
     scm_assert_smob_type(gdbus_connection_tag, x);
     return (gdbus_connection_t *) SCM_SMOB_DATA(x);

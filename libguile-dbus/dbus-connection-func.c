@@ -21,7 +21,7 @@ GDBUS_DEFINE(gdbus_make_dbus_connection, "%make-dbus-connection", 1, (SCM type),
         gdbus_error(FUNC_NAME, "Connection error",
                     scm_from_locale_string(error.message));
     }
-    return _scm_from_dbus_connection(conn, c_type->value);
+    return dbus_connection_to_scm(conn, c_type->value);
 }
 #undef FUNC_NAME
 
@@ -33,8 +33,7 @@ Throws guile-dbus-error on OOM errors.\
 ")
 #define FUNC_NAME s_gdbus_connection_send
 {
-    const gdbus_connection_t* conn_data
-        = _scm_to_dbus_connection_data(connection);
+    const gdbus_connection_t* conn_data = gdbus_connection_from_scm(connection);
     const gdbus_message_t* msg_data = _scm_to_dbus_message_data(message);
     dbus_bool_t result = dbus_connection_send(conn_data->conn,
                                               msg_data->message,
@@ -56,7 +55,7 @@ Queues a message to send.\
 #define FUNC_NAME s_gdbus_connection_send_with_reply
 {
     const gdbus_connection_t* conn_data
-        = _scm_to_dbus_connection_data(connection);
+        = gdbus_connection_from_scm(connection);
     const gdbus_message_t* msg_data = _scm_to_dbus_message_data(message);
     int c_timeout = scm_to_int(timeout);
     DBusPendingCall* call;
