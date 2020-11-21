@@ -12,7 +12,7 @@ GDBUS_DEFINE(gdbus_make_dbus_message, "%make-dbus-message", 1, (SCM type),
 {
     const struct symbol_mapping* c_type = dbus_message_type_from_scm(type);
     DBusMessage* message = dbus_message_new(c_type->value);
-    return _scm_from_dbus_message(message);
+    return dbus_message_to_scm(message);
 }
 #undef FUNC_NAME
 
@@ -66,7 +66,7 @@ GDBUS_DEFINE(gdbus_message_new_method_call, "%make-dbus-message/method-call", 4,
 
     scm_dynwind_end();
 
-    return _scm_from_dbus_message(message);
+    return dbus_message_to_scm(message);
 }
 #undef FUNC_NAME
 
@@ -76,7 +76,7 @@ GDBUS_DEFINE(gdbus_message_new_error, "%make-dbus-message/error", 3,
              "Make a new message that is a reply to another message.")
 #define FUNC_NAME s_gdbus_message_new_error
 {
-    gdbus_message_t* data = _scm_to_dbus_message_data(message);
+    gdbus_message_t* data = gdbus_message_from_scm(message);
     char* c_error_name = NULL;
     char* c_error_message = NULL;
     DBusMessage* new_message = NULL;
@@ -98,7 +98,7 @@ GDBUS_DEFINE(gdbus_message_new_error, "%make-dbus-message/error", 3,
     }
 
     scm_dynwind_end();
-    return _scm_from_dbus_message(new_message);
+    return dbus_message_to_scm(new_message);
 }
 #undef FUNC_NAME
 
@@ -108,13 +108,13 @@ GDBUS_DEFINE(gdbus_messsage_new_method_return,
              "Constructs a message that is a reply to a method call.")
 #define FUNC_NAME s_gdbus_messsage_new_method_return
 {
-    gdbus_message_t* data = _scm_to_dbus_message_data(method_call);
+    gdbus_message_t* data = gdbus_message_from_scm(method_call);
     DBusMessage* new_message = dbus_message_new_method_return(data->message);
     if (new_message == NULL) {
         gdbus_error(FUNC_NAME, "Could not create a message", method_call);
     }
 
-    return _scm_from_dbus_message(new_message);
+    return dbus_message_to_scm(new_message);
 }
 #undef FUNC_NAME
 
@@ -147,7 +147,7 @@ GDBUS_DEFINE(gdbus_messsage_new_signal, "%make-dbus-message/signal", 3,
 
     scm_dynwind_end();
 
-    return _scm_from_dbus_message(new_message);
+    return dbus_message_to_scm(new_message);
 }
 #undef FUNC_NAME
 
@@ -156,7 +156,7 @@ GDBUS_DEFINE(gdbus_message_append_args, "%dbus-message-append-args", 2,
              "Append arguments ARGS to the MESSAGE.")
 #define FUNC_NAME s_gdbus_message_append_args
 {
-    gdbus_message_t* data = _scm_to_dbus_message_data(message);
+    gdbus_message_t* data = gdbus_message_from_scm(message);
     DBusMessageIter iter;
     int list_size;
     SCM param;
@@ -225,7 +225,7 @@ GDBUS_DEFINE(gdbus_message_get_args, "%dbus-message-get-args", 2,
              "")
 #define FUNC_NAME s_gdbus_message_get_args
 {
-    gdbus_message_t* data = _scm_to_dbus_message_data(message);
+    gdbus_message_t* data = gdbus_message_from_scm(message);
     DBusMessageIter iter;
     SCM result = scm_list_n(SCM_UNDEFINED);
 
@@ -295,7 +295,7 @@ DBUS_MESSAGE_TYPE_METHOD_CALL) or the interface a signal is being emitted from \
 ")
 #define FUNC_NAME s_gdbus_message_set_interface
 {
-    gdbus_message_t* data = _scm_to_dbus_message_data(message);
+    gdbus_message_t* data = gdbus_message_from_scm(message);
     char* c_iface = NULL;
 
     SCM_ASSERT(scm_is_string(iface) || scm_is_false(iface), iface, SCM_ARG2, FUNC_NAME);
@@ -320,7 +320,7 @@ GDBUS_DEFINE(gdbus_message_get_interface, "%dbus-message-get-interface", 1,
              "\
 Gets the interface this message is being sent to or emitted from.")
 {
-    gdbus_message_t* data = _scm_to_dbus_message_data(message);
+    gdbus_message_t* data = gdbus_message_from_scm(message);
     const char* interface = dbus_message_get_interface(data->message);
     return scm_from_locale_string(interface);
 }
@@ -332,7 +332,7 @@ Checks if the message has an INTERFACE. \
 ")
 #define FUNC_NAME s_gdbus_message_has_interface_p
 {
-    gdbus_message_t* data = _scm_to_dbus_message_data(message);
+    gdbus_message_t* data = gdbus_message_from_scm(message);
     dbus_bool_t result;
     char* c_interface;
 
@@ -359,7 +359,7 @@ or SCM_BOOL_F if unknown or inapplicable.\
 ")
 #define FUNC_NAME s_gdbus_message_get_sender
 {
-    gdbus_message_t* data = _scm_to_dbus_message_data(message);
+    gdbus_message_t* data = gdbus_message_from_scm(message);
     const char* result = dbus_message_get_sender(data->message);
     return result ? scm_from_locale_string(result) : SCM_BOOL_F;
 }
@@ -370,7 +370,7 @@ GDBUS_DEFINE(gdbus_message_get_serial, "dbus-message-get-serial", 1,
     "Returns the serial of a message or 0 if none has been specified.")
 #define FUNC_NAME s_gdbus_message_get_serial
 {
-    gdbus_message_t* data = _scm_to_dbus_message_data(message);
+    gdbus_message_t* data = gdbus_message_from_scm(message);
     return scm_from_int(dbus_message_get_serial(data->message));
 }
 #undef FUNC_NAME

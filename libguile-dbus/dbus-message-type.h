@@ -21,8 +21,9 @@ struct gdbus_message {
 typedef struct gdbus_message gdbus_message_t;
 
 
-gdbus_message_t* _scm_to_dbus_message_data(SCM x);
-SCM _scm_from_dbus_message(DBusMessage* message);
+gdbus_message_t* make_gdbus_message();
+SCM dbus_message_to_scm(DBusMessage* message);
+gdbus_message_t* gdbus_message_from_scm(SCM x);
 
 
 void init_dbus_message_type();
