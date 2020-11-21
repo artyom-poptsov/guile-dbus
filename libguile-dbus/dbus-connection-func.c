@@ -5,6 +5,7 @@
 #include "error.h"
 #include "symbols.h"
 #include "dbus-connection-type.h"
+#include "dbus-message-type.h"
 
 GDBUS_DEFINE(gdbus_make_dbus_connection, "%make-dbus-connection", 1, (SCM type),
              "Make a DBus connection.")
@@ -20,6 +21,29 @@ GDBUS_DEFINE(gdbus_make_dbus_connection, "%make-dbus-connection", 1, (SCM type),
                     scm_from_locale_string(error.message));
     }
     return _scm_from_dbus_connection(conn, c_type->value);
+}
+#undef FUNC_NAME
+
+GDBUS_DEFINE(gdbus_connection_send, "dbus-connection-send", 2,
+             (SCM connection, SCM message),
+    "\
+Adds a message to the outgoing message queue.  \
+Throws guile-dbus-error on OOM errors.\
+")
+#define FUNC_NAME s_gdbus_connection_send
+{
+    const struct dbus_connection_data* conn_data
+        = _scm_to_dbus_connection_data(connection);
+    const struct dbus_message_data* msg_data
+        = _scm_to_dbus_message_data(message);
+    dbus_bool_t result = dbus_connection_send(conn_data->conn,
+                                              msg_data->message,
+                                              NULL);
+    if (! result) {
+        gdbus_error(FUNC_NAME, "Out of memory",
+                    scm_list_2(connection, message));
+    }
+    return SCM_UNDEFINED;
 }
 #undef FUNC_NAME
 

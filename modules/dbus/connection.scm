@@ -1,7 +1,8 @@
 (define-module (dbus connection)
   #:export (dbus-connection
             make-dbus-connection
-            dbus-connection?))
+            dbus-connection?
+            dbus-connection-send))
 
 
 (define* (make-dbus-connection #:key (type 'session))
