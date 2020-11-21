@@ -53,15 +53,15 @@ SCM dbus_message_to_scm(DBusMessage* message)
 
 gdbus_message_t* gdbus_message_from_scm(SCM x)
 {
-    scm_assert_smob_type(dbus_message_tag, x);
+    scm_assert_smob_type(gdbus_message_tag, x);
     return (gdbus_message_t *) SCM_SMOB_DATA(x);
 }
 
 
 void init_dbus_message_type()
 {
-    dbus_message_tag = scm_make_smob_type(GDBUS_MESSAGE_TYPE_NAME,
-                                          sizeof(gdbus_message_t));
+    gdbus_message_tag = scm_make_smob_type(GDBUS_MESSAGE_TYPE_NAME,
+                                           sizeof(gdbus_message_t));
     set_smob_callbacks(gdbus_message_tag, _mark, _free, _equalp, _print);
 
 #include "dbus-message-type.x"

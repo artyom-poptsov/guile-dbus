@@ -22,7 +22,7 @@ Return #t if X is a DBus message, #f otherwise.\
 ")
 {
 /* #if USING_GUILE_BEFORE_2_2 */
-    return scm_from_bool (SCM_SMOB_PREDICATE (dbus_message_tag, x));
+    return scm_from_bool (SCM_SMOB_PREDICATE (gdbus_message_tag, x));
 /* #else */
 /*     return scm_from_bool (SCM_PORTP(x) */
 /*                           && (SCM_PORT_TYPE(x) == dbus_message_tag)); */
