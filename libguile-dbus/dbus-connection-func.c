@@ -6,6 +6,7 @@
 #include "symbols.h"
 #include "dbus-connection-type.h"
 #include "dbus-message-type.h"
+#include "dbus-pending-call-type.h"
 
 GDBUS_DEFINE(gdbus_make_dbus_connection, "%make-dbus-connection", 1, (SCM type),
              "Make a DBus connection.")
@@ -44,6 +45,33 @@ Throws guile-dbus-error on OOM errors.\
                     scm_list_2(connection, message));
     }
     return SCM_UNDEFINED;
+}
+#undef FUNC_NAME
+
+GDBUS_DEFINE(gdbus_connection_send_with_reply,
+             "%dbus-connection-send/with-reply", 3,
+             (SCM connection, SCM message, SCM timeout),
+    "\
+Queues a message to send.\
+")
+#define FUNC_NAME s_gdbus_connection_send_with_reply
+{
+    const struct dbus_connection_data* conn_data
+        = _scm_to_dbus_connection_data(connection);
+    const struct dbus_message_data* msg_data
+        = _scm_to_dbus_message_data(message);
+    int c_timeout = scm_to_int(timeout);
+    DBusPendingCall* call;
+    dbus_bool_t result = dbus_connection_send_with_reply(conn_data->conn,
+                                                         msg_data->message,
+                                                         &call,
+                                                         c_timeout);
+    if (! result) {
+        gdbus_error(FUNC_NAME, "Out of memory",
+                    scm_list_3(connection, message, timeout));
+    }
+
+    return _scm_from_dbus_pending_call(call);
 }
 #undef FUNC_NAME
 
