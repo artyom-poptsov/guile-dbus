@@ -18,12 +18,12 @@ static const struct symbol_mapping bus_types[] = {
 };
 
 
-static SCM mark_dbus_connection(SCM dbus_connection)
+static SCM _mark(SCM dbus_connection)
 {
     return SCM_BOOL_F;
 }
 
-static size_t free_dbus_connection(SCM dbus_connection)
+static size_t _free(SCM dbus_connection)
 {
     struct dbus_connection_data* gdbus_conn
         = _scm_to_dbus_connection_data(dbus_connection);
@@ -31,13 +31,13 @@ static size_t free_dbus_connection(SCM dbus_connection)
     return 0;
 }
 
-static SCM equalp_dbus_connection(SCM x1, SCM x2)
+static SCM _equalp(SCM x1, SCM x2)
 {
     return compare_objects(x1, x2,
                            (void* (*)(SCM x)) _scm_to_dbus_connection_data);
 }
 
-static int print_dbus_connection(SCM obj, SCM port, scm_print_state* pstate)
+static int _print(SCM obj, SCM port, scm_print_state* pstate)
 {
     (void) pstate;
     struct dbus_connection_data* gdbus_conn = _scm_to_dbus_connection_data(obj);
@@ -102,10 +102,7 @@ void init_dbus_connection_type()
     dbus_connection_tag
         = scm_make_smob_type(GDBUS_CONNECTION_TYPE_NAME,
                              sizeof(struct dbus_connection_data));
-    scm_set_smob_mark(dbus_connection_tag, mark_dbus_connection);
-    scm_set_smob_free(dbus_connection_tag, free_dbus_connection);
-    scm_set_smob_print(dbus_connection_tag, print_dbus_connection);
-    scm_set_smob_equalp(dbus_connection_tag, equalp_dbus_connection);
+    set_smob_callbacks(dbus_connection_tag, _mark, _free, _equalp, _print);
 
 #include "dbus-connection-type.x"
 }

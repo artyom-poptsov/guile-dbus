@@ -51,3 +51,15 @@ SCM compare_objects(SCM x1, SCM x2, void* (*converter)(SCM x))
         return SCM_BOOL_T;
     }
 }
+
+void set_smob_callbacks(scm_t_bits tag,
+                        SCM (*mark_cb)(SCM obj),
+                        size_t (*free_cb)(SCM obj),
+                        SCM (*equalp_cb)(SCM x1, SCM x2),
+                        int (*print_cb)(SCM obj, SCM port, scm_print_state* ps))
+{
+    scm_set_smob_mark(tag, mark_cb);
+    scm_set_smob_free(tag, free_cb);
+    scm_set_smob_print(tag, print_cb);
+    scm_set_smob_equalp(tag, equalp_cb);
+}
