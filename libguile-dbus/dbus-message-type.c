@@ -49,7 +49,9 @@ static int print_dbus_message(SCM obj, SCM port, scm_print_state* pstate)
 {
     (void) pstate;
     /* struct dbus_message_data* data = _scm_to_dbus_message_data(obj); */
-    scm_puts("#<dbus-message>", port);
+    scm_puts("#<dbus-message ", port);
+    scm_display(scm_object_hex_address(obj), port);
+    scm_puts(">", port);
     return 1;
 }
 
