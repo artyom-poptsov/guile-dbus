@@ -3,6 +3,7 @@
 
 #include "common.h"
 #include "dbus-pending-call-type.h"
+#include "dbus-message-type.h"
 
 GDBUS_DEFINE(gdbus_pending_call_block, "dbus-pending-call-block", 1,
              (SCM call),
