@@ -360,7 +360,7 @@ or SCM_BOOL_F if unknown or inapplicable.\
 #define FUNC_NAME s_gdbus_message_get_sender
 {
     struct dbus_message_data* data = _scm_to_dbus_message_data(message);
-    char* result = dbus_message_get_sender(data->message);
+    const char* result = dbus_message_get_sender(data->message);
     return result ? scm_from_locale_string(result) : SCM_BOOL_F;
 }
 #undef FUNC_NAME
