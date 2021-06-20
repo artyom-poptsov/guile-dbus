@@ -23,7 +23,7 @@
                                         path
                                         iface
                                         method)
-  (%dbus-message-new-method-call destination path iface method))
+  (%make-dbus-message/method-call destination path iface method))
 
 (define (make-dbus-message/method-return message)
   (%make-dbus-message/method-return message))
