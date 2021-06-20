@@ -17,9 +17,7 @@ GDBUS_DEFINE(gdbus_make_dbus_message, "%make-dbus-message", 1, (SCM type),
 #undef FUNC_NAME
 
 GDBUS_DEFINE(gdbus_is_message_p, "dbus-message?", 1, (SCM x),
-            "\
-Return #t if X is a DBus message, #f otherwise.\
-")
+            "Return #t if X is a DBus message, #f otherwise.")
 {
 /* #if USING_GUILE_BEFORE_2_2 */
     return scm_from_bool (SCM_SMOB_PREDICATE (gdbus_message_tag, x));
@@ -288,11 +286,9 @@ GDBUS_DEFINE(gdbus_message_get_args, "%dbus-message-get-args", 2,
 
 GDBUS_DEFINE(gdbus_message_set_interface, "%dbus-message-set-interface", 2,
              (SCM message, SCM iface),
-    "\
-Sets the interface this message is being sent to (for \
-DBUS_MESSAGE_TYPE_METHOD_CALL) or the interface a signal is being emitted from \
-(for DBUS_MESSAGE_TYPE_SIGNAL). \
-")
+             "Sets the interface this message is being sent to (for"
+             " DBUS_MESSAGE_TYPE_METHOD_CALL) or the interface a signal is being emitted"
+             " from (for DBUS_MESSAGE_TYPE_SIGNAL).")
 #define FUNC_NAME s_gdbus_message_set_interface
 {
     gdbus_message_t* data = gdbus_message_from_scm(message);
@@ -317,8 +313,8 @@ DBUS_MESSAGE_TYPE_METHOD_CALL) or the interface a signal is being emitted from \
 
 GDBUS_DEFINE(gdbus_message_get_interface, "%dbus-message-get-interface", 1,
              (SCM message),
-             "\
-Gets the interface this message is being sent to or emitted from.")
+             "Gets the interface this message is being sent to "
+             " or emitted from.")
 {
     gdbus_message_t* data = gdbus_message_from_scm(message);
     const char* interface = dbus_message_get_interface(data->message);
@@ -327,9 +323,7 @@ Gets the interface this message is being sent to or emitted from.")
 
 GDBUS_DEFINE(gdbus_message_has_interface_p, "dbus-message-has-interface?", 2,
              (SCM message, SCM interface),
-   "\
-Checks if the message has an INTERFACE. \
-")
+             "Checks if the @var{message} has an @var{interface}.")
 #define FUNC_NAME s_gdbus_message_has_interface_p
 {
     gdbus_message_t* data = gdbus_message_from_scm(message);
@@ -353,10 +347,8 @@ Checks if the message has an INTERFACE. \
 
 GDBUS_DEFINE(gdbus_message_get_sender, "dbus-message-get-sender", 1,
              (SCM message),
-             "\
-Gets the unique name of the connection which originated this message, \
-or SCM_BOOL_F if unknown or inapplicable.\
-")
+             "Gets the unique name of the connection which originated"
+             " this @var{message}, or SCM_BOOL_F if unknown or inapplicable.")
 #define FUNC_NAME s_gdbus_message_get_sender
 {
     gdbus_message_t* data = gdbus_message_from_scm(message);
@@ -367,7 +359,7 @@ or SCM_BOOL_F if unknown or inapplicable.\
 
 GDBUS_DEFINE(gdbus_message_get_serial, "dbus-message-get-serial", 1,
              (SCM message),
-    "Returns the serial of a message or 0 if none has been specified.")
+             "Returns the serial of a message or 0 if none has been specified.")
 #define FUNC_NAME s_gdbus_message_get_serial
 {
     gdbus_message_t* data = gdbus_message_from_scm(message);

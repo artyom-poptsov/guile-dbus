@@ -27,10 +27,8 @@ GDBUS_DEFINE(gdbus_make_dbus_connection, "%make-dbus-connection", 1, (SCM type),
 
 GDBUS_DEFINE(gdbus_connection_send, "dbus-connection-send", 2,
              (SCM connection, SCM message),
-    "\
-Adds a message to the outgoing message queue.  \
-Throws guile-dbus-error on OOM errors.\
-")
+             "Adds a message to the outgoing message queue."
+             " Throws guile-dbus-error on OOM errors.")
 #define FUNC_NAME s_gdbus_connection_send
 {
     const gdbus_connection_t* conn_data = gdbus_connection_from_scm(connection);
@@ -49,9 +47,7 @@ Throws guile-dbus-error on OOM errors.\
 GDBUS_DEFINE(gdbus_connection_send_with_reply,
              "%dbus-connection-send/with-reply", 3,
              (SCM connection, SCM message, SCM timeout),
-    "\
-Queues a message to send.\
-")
+             "Queues a message to send.")
 #define FUNC_NAME s_gdbus_connection_send_with_reply
 {
     const gdbus_connection_t* conn_data

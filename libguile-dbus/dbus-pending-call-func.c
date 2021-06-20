@@ -17,9 +17,8 @@ GDBUS_DEFINE(gdbus_pending_call_block, "dbus-pending-call-block", 1,
 
 GDBUS_DEFINE(gdbus_pending_call_cancel, "dbus-pending-call-cancel", 1,
              (SCM call),
-             "\
-Cancels the pending call, such that any reply \
-or error received will just be ignored.")
+             "Cancels the pending call, such that any reply"
+             " or error received will just be ignored.")
 #define FUNC_NAME s_gdbus_pending_call_cancel
 {
     dbus_pending_call_cancel(dbus_pending_call_from_scm(call));
@@ -40,8 +39,8 @@ GDBUS_DEFINE(gdbus_pending_call_steal_reply, "dbus-pending-call-steal-reply", 1,
 
 GDBUS_DEFINE(gdbus_pending_call_completed_p, "dbus-pending-call-completed?", 1,
              (SCM call),
-    "\
-Checks whether the pending call has received a reply yet, or not. ")
+             "Checks whether the pending call has received a reply yet,"
+             " or not.")
 #define FUNC_NAME s_gdbus_pending_call_completed_p
 {
     DBusPendingCall* c_call = dbus_pending_call_from_scm(call);
