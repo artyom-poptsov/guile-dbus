@@ -1,5 +1,6 @@
 #include <dbus/dbus.h>
 #include <libguile.h>
+#include <assert.h>
 
 #include "common.h"
 #include "symbols.h"
@@ -210,6 +211,31 @@ GDBUS_DEFINE(gdbus_message_append_args, "%dbus-message-append-args", 2,
                 dbus_message_iter_append_basic(&iter, symbol->value, &value);
                 break;
             }
+
+            case DBUS_TYPE_ARRAY: {
+                int length = scm_to_int(scm_vector_length(scm_value));
+                DBusMessageIter container_iter;
+                dbus_bool_t ret = dbus_message_iter_open_container(
+                    &iter,
+                    DBUS_TYPE_ARRAY,
+                    DBUS_TYPE_STRING_AS_STRING,
+                    &container_iter);
+
+                assert(ret == TRUE);
+
+                for (int idx = 0; idx < length; ++idx) {
+                    SCM v = scm_vector_ref(scm_value, scm_from_int(idx));
+                    char* cv = scm_to_locale_string(v);
+                    dbus_message_iter_append_basic(
+                        &container_iter,
+                        symbol->value,
+                        &cv);
+                }
+
+                dbus_message_iter_close_container(&iter, &container_iter);
+                break;
+            }
+
             case DBUS_TYPE_UINT64:
             case DBUS_TYPE_DOUBLE:
                 gdbus_error(FUNC_NAME, "Unsupported yet",
