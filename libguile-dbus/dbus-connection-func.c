@@ -118,6 +118,40 @@ GDBUS_DEFINE(gdbus_connection_send_with_reply,
 }
 #undef FUNC_NAME
 
+GDBUS_DEFINE(gdbus_connection_send_with_reply_and_block,
+             "dbus-connection-send/with-reply-and-block", 3,
+             (SCM connection, SCM message, SCM timeout),
+             "Sends a message and blocks a certain time period while waiting "
+             " for a reply.  Returns a reply message on successful call.")
+#define FUNC_NAME s_gdbus_connection_send_with_reply_and_block
+{
+    const gdbus_connection_t* conn_data = gdbus_connection_from_scm(connection);
+    const gdbus_message_t* msg_data     = gdbus_message_from_scm(message);
+    int c_timeout = scm_to_int(timeout);
+    DBusError err;
+    DBusMessage* reply_message = NULL;
+
+    dbus_error_init(&err);
+
+    reply_message = dbus_connection_send_with_reply_and_block(
+        conn_data->conn,
+        msg_data->message,
+        c_timeout,
+        &err);
+
+    if (! reply_message) {
+        SCM error_name    = scm_from_locale_string(err.name);
+        SCM error_message = scm_from_locale_string(err.message);
+        gdbus_error(
+            FUNC_NAME,
+            "Could not send the message",
+            scm_list_4(connection, message, error_name, error_message));
+    }
+
+    return dbus_message_to_scm(reply_message);
+}
+#undef FUNC_NAME
+
 GDBUS_DEFINE(gdbus_connection_flush,
              "dbus-connection-flush", 1,
              (SCM connection),

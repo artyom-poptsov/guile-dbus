@@ -4,6 +4,7 @@
             dbus-connection?
             dbus-connection-send
             dbus-connection-send/with-reply
+            dbus-connection-send/with-reply-and-block
             dbus-connection-flush
             dbus-connection-open?
             dbus-connection-authenticated?
