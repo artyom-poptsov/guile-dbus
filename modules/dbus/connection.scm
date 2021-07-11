@@ -3,7 +3,8 @@
             make-dbus-connection
             dbus-connection?
             dbus-connection-send
-            dbus-connection-send/with-reply))
+            dbus-connection-send/with-reply
+            dbus-connection-flush))
 
 
 (define* (make-dbus-connection #:key (type 'session))

@@ -68,6 +68,21 @@ GDBUS_DEFINE(gdbus_connection_send_with_reply,
 }
 #undef FUNC_NAME
 
+GDBUS_DEFINE(gdbus_connection_flush,
+             "dbus-connection-flush", 1,
+             (SCM connection),
+             "Blocks until the outgoing message queue is empty")
+#define FUNC_NAME s_gdbus_connection_flush
+{
+    const gdbus_connection_t* conn_data
+        = gdbus_connection_from_scm(connection);
+
+    dbus_connection_flush(conn_data->conn);
+
+    return SCM_UNDEFINED;
+}
+#undef FUNC_NAME
+
 
 void init_dbus_connection_func()
 {
