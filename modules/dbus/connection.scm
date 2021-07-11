@@ -6,7 +6,8 @@
             dbus-connection-send/with-reply
             dbus-connection-flush
             dbus-connection-open?
-            dbus-connection-authenticated?))
+            dbus-connection-authenticated?
+            dbus-connection-max-message-size))
 
 
 (define* (make-dbus-connection #:key (type 'session))

@@ -49,6 +49,18 @@ GDBUS_DEFINE(gdbus_connection_authenticated_p,
 }
 #undef FUNC_NAME
 
+GDBUS_DEFINE(gdbus_connection_max_message_size,
+             "dbus-connection-max-message-size", 1,
+             (SCM connection),
+             "Gets the maximum message size.")
+#define FUNC_NAME s_gdbus_connection_max_message_size
+{
+    const gdbus_connection_t* conn_data = gdbus_connection_from_scm(connection);
+    int64_t result = dbus_connection_get_max_message_size(conn_data->conn);
+    return scm_from_int64(result);
+}
+#undef FUNC_NAME
+
 GDBUS_DEFINE(gdbus_connection_send, "dbus-connection-send", 2,
              (SCM connection, SCM message),
              "Adds a message to the outgoing message queue."
