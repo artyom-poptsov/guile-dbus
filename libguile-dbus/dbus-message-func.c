@@ -171,6 +171,9 @@ GDBUS_DEFINE(gdbus_message_append_args, "%dbus-message-append-args", 2,
             SCM scm_type  = scm_list_ref(param, scm_from_int(0));
             SCM scm_value = scm_list_ref(param, scm_from_int(1));
             const symbol_mapping_t* symbol = dbus_type_from_scm(scm_type);
+            if (! symbol) {
+                gdbus_error(FUNC_NAME, "Unknown type", scm_type);
+            }
             switch (symbol->value) {
             case DBUS_TYPE_BYTE: {
                 unsigned char value = scm_to_uchar(scm_value);
