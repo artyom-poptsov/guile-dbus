@@ -205,9 +205,13 @@ GDBUS_DEFINE(gdbus_message_append_args, "%dbus-message-append-args", 2,
                 dbus_message_iter_append_basic(&iter, symbol->value, &value);
                 break;
             }
+            case DBUS_TYPE_STRING: {
+                char* value = scm_to_locale_string(scm_value);
+                dbus_message_iter_append_basic(&iter, symbol->value, &value);
+                break;
+            }
             case DBUS_TYPE_UINT64:
             case DBUS_TYPE_DOUBLE:
-            case DBUS_TYPE_STRING:
                 gdbus_error(FUNC_NAME, "Unsupported yet",
                             scm_list_2(message, args));
             }
