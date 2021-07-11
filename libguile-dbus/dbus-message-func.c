@@ -171,7 +171,9 @@ GDBUS_DEFINE(gdbus_message_append_args, "%dbus-message-append-args", 2,
         if (scm_list_p(param)) {
             SCM scm_type  = scm_list_ref(param, scm_from_int(0));
             SCM scm_value = scm_list_ref(param, scm_from_int(1));
+
             const symbol_mapping_t* symbol = dbus_type_from_scm(scm_type);
+
             if (! symbol) {
                 gdbus_error(FUNC_NAME, "Unknown type", scm_type);
             }
@@ -213,18 +215,21 @@ GDBUS_DEFINE(gdbus_message_append_args, "%dbus-message-append-args", 2,
             }
 
             case DBUS_TYPE_ARRAY: {
-                int length = scm_to_int(scm_vector_length(scm_value));
+                SCM type = scm_list_ref(scm_value, scm_from_int(0));
+                SCM arr  = scm_list_ref(scm_value, scm_from_int(1));
+
+                int length = scm_to_int(scm_vector_length(arr));
                 DBusMessageIter container_iter;
                 dbus_bool_t ret = dbus_message_iter_open_container(
                     &iter,
                     DBUS_TYPE_ARRAY,
-                    DBUS_TYPE_STRING_AS_STRING,
+                    scm_to_locale_string(type),
                     &container_iter);
 
                 assert(ret == TRUE);
 
                 for (int idx = 0; idx < length; ++idx) {
-                    SCM v = scm_vector_ref(scm_value, scm_from_int(idx));
+                    SCM v = scm_vector_ref(arr, scm_from_int(idx));
                     char* cv = scm_to_locale_string(v);
                     dbus_message_iter_append_basic(
                         &container_iter,
