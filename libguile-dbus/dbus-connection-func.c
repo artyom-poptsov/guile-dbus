@@ -49,6 +49,20 @@ GDBUS_DEFINE(gdbus_connection_authenticated_p,
 }
 #undef FUNC_NAME
 
+GDBUS_DEFINE(gdbus_connection_server_id,
+             "dbus-connection-server-id", 1,
+             (SCM connection),
+             "Gets the ID of the server address we are authenticated to,"
+             " if this connection is on the client side.  Otherwise return"
+             " #f.")
+#define FUNC_NAME s_gdbus_connection_server_id
+{
+    const gdbus_connection_t* conn_data = gdbus_connection_from_scm(connection);
+    char* result = dbus_connection_get_server_id(conn_data->conn);
+    return (result == NULL) ? SCM_BOOL_F : scm_from_locale_string(result);
+}
+#undef FUNC_NAME
+
 GDBUS_DEFINE(gdbus_connection_max_message_size,
              "dbus-connection-max-message-size", 1,
              (SCM connection),

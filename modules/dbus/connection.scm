@@ -7,6 +7,7 @@
             dbus-connection-flush
             dbus-connection-open?
             dbus-connection-authenticated?
+            dbus-connection-server-id
             dbus-connection-max-message-size))
 
 
