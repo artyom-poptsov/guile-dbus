@@ -37,6 +37,18 @@ GDBUS_DEFINE(gdbus_connection_open_p,
 }
 #undef FUNC_NAME
 
+GDBUS_DEFINE(gdbus_connection_authenticated_p,
+             "dbus-connection-authenticated?", 1,
+             (SCM connection),
+             "Gets whether the connection was authenticated.")
+#define FUNC_NAME s_gdbus_connection_authenticated_p
+{
+    const gdbus_connection_t* conn_data = gdbus_connection_from_scm(connection);
+    dbus_bool_t result = dbus_connection_get_is_authenticated(conn_data->conn);
+    return (result == TRUE) ? SCM_BOOL_T : SCM_BOOL_F;
+}
+#undef FUNC_NAME
+
 GDBUS_DEFINE(gdbus_connection_send, "dbus-connection-send", 2,
              (SCM connection, SCM message),
              "Adds a message to the outgoing message queue."
