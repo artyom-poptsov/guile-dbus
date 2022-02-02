@@ -1,7 +1,7 @@
 (define-module (dbus connection)
-  #:export (dbus-connection
+  #:export (;dbus-connection
             make-dbus-connection
-            dbus-connection?
+            ; dbus-connection?
             dbus-connection-send
             dbus-connection-send/with-reply
             dbus-connection-send/with-reply-and-block
