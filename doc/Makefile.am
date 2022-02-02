@@ -3,7 +3,7 @@
 ## Copyright (C) 2020 Artyom V. Poptsov <poptsov.artyom@gmail.com>
 ##
 ## This file is part of Guile-DBus.
-## 
+##
 ## Guile-DBus is free software: you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
 ## published by the Free Software Foundation, either version 3 of the
@@ -19,10 +19,13 @@
 
 AUTOMAKE_OPTIONS = gnu
 
-# info_TEXINFOS = guile-dbus.texi
+info_TEXINFOS = guile-dbus.texi
 
-# guile_dbus_TEXINFOS = \
-# 	guile-dbus.texi	\
-# 	fdl.texi
+guile_dbus_TEXINFOS = \
+	guile-dbus.texi \
+	dbus-message.texi \
+	dbus-connection.texi \
+	pending-call.texi \
+	fdl.texi
 
 ## Makefile.am ends here

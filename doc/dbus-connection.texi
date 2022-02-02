@@ -1,0 +1,41 @@
+@node DBus Connection
+@chapter DBus Connection
+
+@deffn {Scheme Procedure} make-dbus-connection [#:type='session]
+Make a DBus connection.
+@end deffn
+
+@deffn {Scheme Procedure} dbus-connection-send connection message
+Adds a message to the outgoing message queue.
+Throws guile-dbus-error on OOM errors.
+@end deffn
+
+@deffn {Scheme Procedure} dbus-connection-send/with-reply connection message [timeout=-1]
+@end deffn
+
+@deffn {Scheme Procedure} dbus-connection-send/with-reply-and-block connection message timeout
+Sends a message and blocks a certain time period while waiting for a reply.
+Returns a reply message on successful call.
+@end deffn
+
+@deffn {Scheme Procedure} dbus-connection-flush connection
+Blocks until the outgoing message queue is empty.
+@end deffn
+
+@deffn {Scheme Procedure} dbus-connection-open? connection
+Gets whether the connection is currently open.
+@end deffn
+
+@deffn {Scheme Procedure} dbus-connection-authenticated? connection
+Gets whether the connection was authenticated.
+@end deffn
+
+@deffn {Scheme Procedure} dbus-connection-server-id connection
+Gets the ID of the server address we are authenticated to,
+if this connection is on the client side.
+Otherwise return #f.
+@end deffn
+
+@deffn {Scheme Procedure} dbus-connection-max-message-size connection
+Gets the maximum message size.
+@end deffn
