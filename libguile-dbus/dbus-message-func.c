@@ -302,11 +302,13 @@ GDBUS_DEFINE(gdbus_message_get_args, "%dbus-message-get-args", 2,
 
     if (scm_is_false(types)) {
         if (! dbus_message_iter_init(data->message, &iter)) {
+             /* Message had no arguments, return our empty list */
             return result;
         }
 
-        for (; dbus_message_iter_has_next(&iter); dbus_message_iter_next(&iter)) {
-            int c_type = dbus_message_iter_get_arg_type(&iter);
+        int c_type;
+        while ((c_type = dbus_message_iter_get_arg_type(&iter))
+               != DBUS_TYPE_INVALID) {
             SCM type = dbus_type_to_scm(c_type);
             DBusBasicValue c_value;
 
@@ -314,6 +316,8 @@ GDBUS_DEFINE(gdbus_message_get_args, "%dbus-message-get-args", 2,
 
             SCM value = dbus_value_to_scm(c_type, c_value);
             result = scm_append(scm_list_2(result, scm_list_2(type, value)));
+
+            dbus_message_iter_next(&iter);
         }
     } else {
         if (! dbus_message_iter_init(data->message, &iter)) {
