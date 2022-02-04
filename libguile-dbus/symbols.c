@@ -73,11 +73,11 @@ SCM dbus_value_to_scm(int type, DBusBasicValue value)
     case DBUS_TYPE_INT16:
         return scm_from_short(value.i16);
 
-    case DBUS_TYPE_INT32:
-        return scm_from_int32(value.i32);
-
     case DBUS_TYPE_UINT16:
         return scm_from_uint16(value.u16);
+
+    case DBUS_TYPE_INT32:
+        return scm_from_int32(value.i32);
 
     case DBUS_TYPE_UINT32:
         return scm_from_uint32(value.u32);
@@ -91,8 +91,20 @@ SCM dbus_value_to_scm(int type, DBusBasicValue value)
     case DBUS_TYPE_DOUBLE:
         return scm_from_double(value.dbl);
 
+    case DBUS_TYPE_OBJECT_PATH:
+    case DBUS_TYPE_SIGNATURE:
     case DBUS_TYPE_STRING:
         return scm_from_locale_string(value.str);
+
+    case DBUS_TYPE_BOOLEAN:
+         switch (value.bool_val) {
+         case TRUE:  return SCM_BOOL_T;
+         case FALSE: return SCM_BOOL_F;
+         default:    return SCM_BOOL_F; /* possibly throw errer here instead */
+         }
+
+    case DBUS_TYPE_UNIX_FD:
+         return scm_from_int(value.fd);
 
     default:
         return SCM_BOOL_F;      /* The type is unsupported yet. */
