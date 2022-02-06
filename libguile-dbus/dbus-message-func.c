@@ -150,6 +150,7 @@ GDBUS_DEFINE(gdbus_messsage_new_signal, "%make-dbus-message/signal", 3,
 }
 #undef FUNC_NAME
 
+/* See https://dbus.freedesktop.org/doc/api/html/group__DBusProtocol.html */
 GDBUS_DEFINE(gdbus_message_append_args, "%dbus-message-append-args", 2,
              (SCM message, SCM args),
              "Append arguments ARGS to the MESSAGE.")
@@ -178,13 +179,19 @@ GDBUS_DEFINE(gdbus_message_append_args, "%dbus-message-append-args", 2,
                 gdbus_error(FUNC_NAME, "Unknown type", scm_type);
             }
             switch (symbol->value) {
+            case DBUS_TYPE_BOOLEAN: {
+                /* This makes any non-false value true */
+                dbus_bool_t value = scm_is_true(scm_value);
+                dbus_message_iter_append_basic(&iter, symbol->value, &value);
+                break;
+            }
             case DBUS_TYPE_BYTE: {
-                unsigned char value = scm_to_uchar(scm_value);
+                unsigned char value = scm_to_uint8(scm_value);
                 dbus_message_iter_append_basic(&iter, symbol->value, &value);
                 break;
             }
             case DBUS_TYPE_INT16: {
-                dbus_int16_t value = scm_to_short(scm_value);
+                dbus_int16_t value = scm_to_int16(scm_value);
                 dbus_message_iter_append_basic(&iter, symbol->value, &value);
                 break;
             }
@@ -208,8 +215,33 @@ GDBUS_DEFINE(gdbus_message_append_args, "%dbus-message-append-args", 2,
                 dbus_message_iter_append_basic(&iter, symbol->value, &value);
                 break;
             }
+            case DBUS_TYPE_UINT64: {
+                 dbus_uint64_t value = scm_to_uint64(scm_value);
+                 dbus_message_iter_append_basic(&iter, symbol->value, &value);
+                 break;
+            }
+            /* Object paths and signatures technically have to be validated,
+               but are otherwise identical to strings. See
+               https://dbus.freedesktop.org/doc/dbus-specification.html#type-system */
+            case DBUS_TYPE_OBJECT_PATH:
+            case DBUS_TYPE_SIGNATURE:
             case DBUS_TYPE_STRING: {
-                char* value = scm_to_locale_string(scm_value);
+                char* value = scm_to_utf8_stringn(scm_value, NULL);
+                dbus_message_iter_append_basic(&iter, symbol->value, &value);
+                break;
+            }
+            case DBUS_TYPE_DOUBLE: {
+                /* While techincly not exactly correct, since DBUS_TYPE_DOUBLE
+                   marks an 8-byte IEEE754 double, while C doesn't have that
+                   guarantee, it will still be right in 99%+ of cases */
+                double value = scm_to_double(scm_value);
+                dbus_message_iter_append_basic(&iter, symbol->value, &value);
+                break;
+            }
+            case DBUS_TYPE_UNIX_FD: {
+                /* Explicitly the system dependant int types, since
+                   file descriptors are system dependant */
+                int value = scm_to_uint(scm_fileno(scm_value));
                 dbus_message_iter_append_basic(&iter, symbol->value, &value);
                 break;
             }
@@ -241,8 +273,7 @@ GDBUS_DEFINE(gdbus_message_append_args, "%dbus-message-append-args", 2,
                 break;
             }
 
-            case DBUS_TYPE_UINT64:
-            case DBUS_TYPE_DOUBLE:
+            default:
                 gdbus_error(FUNC_NAME, "Unsupported yet",
                             scm_list_2(message, args));
             }
@@ -271,11 +302,13 @@ GDBUS_DEFINE(gdbus_message_get_args, "%dbus-message-get-args", 2,
 
     if (scm_is_false(types)) {
         if (! dbus_message_iter_init(data->message, &iter)) {
+             /* Message had no arguments, return our empty list */
             return result;
         }
 
-        for (; dbus_message_iter_has_next(&iter); dbus_message_iter_next(&iter)) {
-            int c_type = dbus_message_iter_get_arg_type(&iter);
+        int c_type;
+        while ((c_type = dbus_message_iter_get_arg_type(&iter))
+               != DBUS_TYPE_INVALID) {
             SCM type = dbus_type_to_scm(c_type);
             DBusBasicValue c_value;
 
@@ -283,6 +316,8 @@ GDBUS_DEFINE(gdbus_message_get_args, "%dbus-message-get-args", 2,
 
             SCM value = dbus_value_to_scm(c_type, c_value);
             result = scm_append(scm_list_2(result, scm_list_2(type, value)));
+
+            dbus_message_iter_next(&iter);
         }
     } else {
         if (! dbus_message_iter_init(data->message, &iter)) {
