@@ -1,0 +1,76 @@
+@node DBus Message
+@chapter DBus Message
+
+@deffn {Scheme Procedure} dbus-message? obj
+Return @code{#t} if @var{obj} is a DBus message, @code{#f} otherwise.
+@end deffn
+
+@deffn {Scheme Procedure} make-dbus-message type
+Make a new DBus message, where type is one of the symbols
+@itemize
+@item invalid
+@item method-call
+@item method-return
+@item error
+@item signal
+@end itemize
+Which correspond to their respective @code{DBUS_MESSAGE_TYPE_<type>}.
+@c see dbus-protocol.h
+@vindex invalid
+@vindex method-call
+@vindex method-return
+@vindex error
+@vindex signal
+@vindex DBUS_MESSAGE_TYPE_INVALID
+@vindex DBUS_MESSAGE_TYPE_METHOD_CALL
+@vindex DBUS_MESSAGE_TYPE_METHOD_RETURN
+@vindex DBUS_MESSAGE_TYPE_ERROR
+@vindex DBUS_MESSAGE_TYPE_SIGNAL
+@end deffn
+
+@deffn {Scheme Procedure} make-dbus-message/method-call [#:destination=#f] [#:path=#f] [#:iface=#f] [#:method=#f]
+Make a new message to invoke a method on a remote object.
+@end deffn
+
+@deffn {Scheme Procedure} make-dbus-message/method-return message
+Constructs a message that is a reply to a method call.
+@end deffn
+
+@deffn {Scheme Procedure} make-dbus-message/signal [#:path=#f] [#:iface=#f] [#:name=#f]
+Constructs a new message representing a signal emission.
+@end deffn
+
+@deffn {Scheme Procedure} make-dbus-message/error [#:message=#f] [#:error-name=#f] [#:error-message=#f]
+Make a new message that is a reply to another message.
+@end deffn
+
+@deffn {Scheme Procedure} dbus-message-append-args message args
+Append arguments ARGS to the MESSAGE.
+@end deffn
+
+@deffn {Scheme Procedure} dbus-message-get-args message [types]
+""
+@end deffn
+
+@deffn {Scheme Procedure} dbus-message-set-interface message iface
+Sets the interface this message is being sent to (for
+@code{DBUS_MESSAGE_TYPE_METHOD_CALL}) or the interface a signal is being emitted
+from (for @code{DBUS_MESSAGE_TYPE_SIGNAL}).
+@end deffn
+
+@deffn {Scheme Procedure} dbus-message-get-interface message
+Gets the interface this message is being sent to or emitted from.
+@end deffn
+
+@deffn {Scheme Procedure} dbus-message-has-interface? message interface
+Checks if the @var{message} has an @var{interface}.
+@end deffn
+
+@deffn {Scheme Procedure} dbus-message-get-sender message
+Gets the unique name of the connection which originated
+this @var{message}, or SCM_BOOL_F if unknown or inapplicable.
+@end deffn
+
+@deffn {Scheme Procedure} dbus-message-get-serial message
+Returns the serial of a message or 0 if none has been specified.
+@end deffn

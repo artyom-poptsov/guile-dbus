@@ -1,0 +1,18 @@
+@node Pending Call
+@chapter Pending Call
+
+@deffn {Scheme Procedure} dbus-pending-call-block call
+Block until the pending call is completed.
+@end deffn
+
+@deffn {Scheme Procedure} dbus-pending-call-cancel call
+Cancels the pending call, such that any reply or error received will just be ignored.
+@end deffn
+
+@deffn {Scheme Procedure} dbus-pending-call-steal-reply call
+""
+@end deffn
+
+@deffn {Scheme Procedure} dbus-pending-call-completed? call
+Checks whether the pending call has received a reply yet, or not.
+@end deffn
