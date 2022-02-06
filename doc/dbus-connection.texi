@@ -3,6 +3,13 @@
 
 @deffn {Scheme Procedure} make-dbus-connection [#:type='session]
 Make a DBus connection.
+
+Type should be one of
+@itemize
+@item session
+@item system
+@item starter
+@end itemize
 @end deffn
 
 @deffn {Scheme Procedure} dbus-connection-send connection message
