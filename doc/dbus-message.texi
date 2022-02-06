@@ -2,11 +2,30 @@
 @chapter DBus Message
 
 @deffn {Scheme Procedure} dbus-message? obj
-Return #t if X is a DBus message, #f otherwise.
+Return @code{#t} if @var{obj} is a DBus message, @code{#f} otherwise.
 @end deffn
 
 @deffn {Scheme Procedure} make-dbus-message type
-Make a DBus message
+Make a new DBus message, where type is one of the symbols
+@itemize
+@item invalid
+@item method-call
+@item method-return
+@item error
+@item signal
+@end itemize
+Which correspond to their respective @code{DBUS_MESSAGE_TYPE_<type>}.
+@c see dbus-protocol.h
+@vindex invalid
+@vindex method-call
+@vindex method-return
+@vindex error
+@vindex signal
+@vindex DBUS_MESSAGE_TYPE_INVALID
+@vindex DBUS_MESSAGE_TYPE_METHOD_CALL
+@vindex DBUS_MESSAGE_TYPE_METHOD_RETURN
+@vindex DBUS_MESSAGE_TYPE_ERROR
+@vindex DBUS_MESSAGE_TYPE_SIGNAL
 @end deffn
 
 @deffn {Scheme Procedure} make-dbus-message/method-call [#:destination=#f] [#:path=#f] [#:iface=#f] [#:method=#f]
@@ -35,8 +54,8 @@ Append arguments ARGS to the MESSAGE.
 
 @deffn {Scheme Procedure} dbus-message-set-interface message iface
 Sets the interface this message is being sent to (for
-DBUS_MESSAGE_TYPE_METHOD_CALL) or the interface a signal is being emitted
-from (for DBUS_MESSAGE_TYPE_SIGNAL).
+@code{DBUS_MESSAGE_TYPE_METHOD_CALL}) or the interface a signal is being emitted
+from (for @code{DBUS_MESSAGE_TYPE_SIGNAL}).
 @end deffn
 
 @deffn {Scheme Procedure} dbus-message-get-interface message
