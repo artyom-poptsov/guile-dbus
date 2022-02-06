@@ -1,6 +1,5 @@
 (define-module (dbus message)
-  #:export (dbus-message
-            dbus-message?
+  #:export (dbus-message?
             make-dbus-message
             make-dbus-message/method-call
             make-dbus-message/method-return
